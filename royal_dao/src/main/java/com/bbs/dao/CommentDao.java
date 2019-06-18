@@ -1,6 +1,5 @@
 package com.bbs.dao;
 
-import com.bbs.domain.Comment;
 import com.bbs.domain.CommentExample;
 import org.apache.ibatis.annotations.Param;
 

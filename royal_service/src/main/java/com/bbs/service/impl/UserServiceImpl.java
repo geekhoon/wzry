@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public User manageLogin(User user) {
         try {
             UserExample example=new UserExample();
-            example.createCriteria().andUsernameEqualTo(user.getUserName()).andUserpassEqualTo(user.getUserPass()).andRoleEqualTo(3);
+            example.createCriteria().andUsernameEqualTo(user.getUsername()).andUserpassEqualTo(user.getUserpass()).andRoleEqualTo(3);
             List<User> userTables = userDao.selectByExample(example);
             if (userTables.size()==0){
                 return null;

@@ -1,6 +1,5 @@
 package com.bbs.controller;
 
-import com.bbs.domain.User;
 import com.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,14 +14,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    /**
-     * 跳转到首页
-     * @return
-     */
-    @RequestMapping("/findIndex.do")
-    public String findIndex(){
-        return "index";
-    }
+//    /**
+//     * 跳转到首页
+//     * @return
+//     */
+//    @RequestMapping("/findIndex.do")
+//    public String findIndex(){
+//        return "index";
+//    }
 
     @RequestMapping("/findRegister.do")
     public String findRedister(){
