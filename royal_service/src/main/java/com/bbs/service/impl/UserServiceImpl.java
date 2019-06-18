@@ -2,9 +2,12 @@ package com.bbs.service.impl;
 
 import com.bbs.dao.UserDao;
 import com.bbs.domain.User;
+import com.bbs.domain.UserExample;
 import com.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService {
@@ -31,5 +34,21 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public User manageLogin(User user) {
+        try {
+            UserExample example=new UserExample();
+            example.createCriteria().andUsernameEqualTo(user.getUserName()).andUserpassEqualTo(user.getUserPass()).andRoleEqualTo(3);
+            List<User> userTables = userDao.selectByExample(example);
+            if (userTables.size()==0){
+                return null;
+            }else{
+                return userTables.get(0);
+            }
+        }catch (Exception e){
+            return null;
+        }
     }
 }

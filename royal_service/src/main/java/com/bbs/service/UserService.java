@@ -15,4 +15,6 @@ public interface UserService {
     User findUserByuserName(String userName);
 
     Boolean userRegist(User user);
+
+    User manageLogin(User user);
 }
