@@ -1,6 +1,8 @@
 package com.bbs.dao;
 
+import com.bbs.domain.Upvote;
 import com.bbs.domain.UpvoteExample;
+import com.bbs.domain.UpvoteKey;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

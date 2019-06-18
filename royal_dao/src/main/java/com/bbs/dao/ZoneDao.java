@@ -1,5 +1,6 @@
 package com.bbs.dao;
 
+import com.bbs.domain.Zone;
 import com.bbs.domain.ZoneExample;
 import org.apache.ibatis.annotations.Param;
 
