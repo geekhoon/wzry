@@ -13,6 +13,7 @@
         <module>../royal_dao</module>
         <module>../royal_service</module>
         <module>../royal_web</module>
+        <module>../royal_manage_web</module>
     </modules>
     <packaging>pom</packaging>
 
