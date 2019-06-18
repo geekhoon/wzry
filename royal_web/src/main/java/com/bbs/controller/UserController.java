@@ -17,14 +17,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    /**
-//     * 跳转到首页
-//     * @return
-//     */
-//    @RequestMapping("/findIndex.do")
-//    public String findIndex(){
-//        return "index";
-//    }
+    /**
+     * 跳转到首页
+     * @return
+     */
+    @RequestMapping("/findIndex.do")
+    public String findIndex(){
+        return "index";
+    }
 
     @RequestMapping("/findRegister.do")
     public String findRedister(){
