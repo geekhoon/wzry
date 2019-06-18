@@ -1,9 +1,12 @@
 package com.bbs.controller;
 
+import com.bbs.domain.User;
 import com.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,7 +32,8 @@ public class UserController {
     }
 
     @RequestMapping("/findUserByUserName.do")
-    public @ResponseBody User findUserByUserName(String userName){
+    public @ResponseBody
+    User findUserByUserName(String userName){
         User user = userService.findUserByuserName(userName);
         return user;
     }
@@ -61,8 +65,8 @@ public class UserController {
     public String userRegist(String userName,String userPass,String email){
 //        System.out.println(userName+"---"+userPass+"---"+email);
         User user = new User();
-        user.setUserName(userName);
-        user.setUserPass(userPass);
+        user.setUsername(userName);
+        user.setUserpass(userPass);
         if ("".equals(email)){
             user.setEmail(null);
         }else{

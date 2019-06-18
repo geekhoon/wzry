@@ -2,6 +2,7 @@ package com.bbs.controller;
 
 import com.bbs.common.CommonCode;
 import com.bbs.common.ResponseResult;
+import com.bbs.domain.User;
 import com.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
