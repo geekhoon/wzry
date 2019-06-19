@@ -67,7 +67,7 @@
                 type:'post',
                 dataType:'json',
                 contentType:'application/json',
-                url:'user/login.do',
+                url:'manageUser/login.do',
                 data:JSON.stringify($("#login_form").serializeJson()),
                 success:function (data) {
                     if(data.success){
@@ -75,7 +75,7 @@
                         location.href="/jsp/main.jsp";
                     }else{
                         //登录失败
-                        $("#errorMsg").html("账号或密码错误");
+                        $("#errorMsg").html(data.message);
                     }
                 }
             });

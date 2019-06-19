@@ -1,6 +1,8 @@
 package com.bbs.domain;
 
-public class UpvoteKey {
+import java.io.Serializable;
+
+public class UpvoteKey implements Serializable {
     private String upvoteusername;
 
     private Integer upvotearticleid;

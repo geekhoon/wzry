@@ -1,14 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>XXX公司人力资源系统后台</title>
+    <title>王者荣耀论坛管理系统</title>
 </head>
 <body>
 <div class="hrms_container">
     <!-- 导航条 -->
     <%@ include file="./commom/head.jsp"%>
 
-    <!-- 中间部分（包括左边栏和员工/部门表单显示部分） -->
+    <!-- 中间部分-->
     <div class="hrms_body" style="position:relative; top:-15px;">
 
         <!-- 左侧栏 -->
@@ -18,7 +18,7 @@
         <div class="hrms_main_ad col-sm-10">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 style="text-align: center;">欢迎进入黑马程序员厦门校区管理系统！</h3>
+                    <h3 style="text-align: center;">欢迎进入王者荣耀论坛管理系统！</h3>
                 </div>
                 <div class="panel-body" style="position:relative; top:-15px;">
                     <div id="hrms_carousel_1" class="carousel slide" data-ride="carousel">
@@ -30,27 +30,27 @@
 
                         <div class="carousel-inner" role="listbox">
                             <div class="item active" style="text-align: center;">
-                                <img class="img-responsive center-block" src="/img/company1.jpg" alt="company1">
+                                <img class="img-responsive center-block" src="/img/img1.jpg" alt="company1">
                                 <div class="carousel-caption">
-                                    <h3>漂亮大气的咨询师</h3>
+                                    <h3>妲己</h3>
                                 </div>
                             </div>
                             <div class="item">
-                                <img class="img-responsive center-block" src="/img/company2.jpg" alt="company2">
+                                <img class="img-responsive center-block" src="/img/img2.jpg" alt="company2">
                                 <div class="carousel-caption">
-                                    <h3>舒适的办公环境</h3>
+                                    <h3>狄仁杰</h3>
                                 </div>
                             </div>
                             <div class="item">
-                                <img class="img-responsive center-block" src="/img/company3.jpg" alt="company3">
+                                <img class="img-responsive center-block" src="/img/img3.jpg" alt="company3">
                                 <div class="carousel-caption">
-                                    <h3>舒适的办公环境</h3>
+                                    <h3>韩信</h3>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Controls -->
-                        <a class="left carousel-control" href="#chrms_carousel_1" role="button" data-slide="prev">
+                        <a class="left carousel-control" href="#hrms_carousel_1" role="button" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>

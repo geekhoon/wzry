@@ -2,54 +2,54 @@ package com.bbs.domain;
 
 import java.util.Date;
 
-/*
-	回复评论
-*/
 public class Reply {
-	private Integer replyId; //回复编号
-	private String replyContent; //内容
-	private Date replyTime; //回复时间
-	private String replyUserName; //回复人
-	private Integer commentId; //该回复所属的评论
-	
-	public Integer getReplyId() {
-		return replyId;
-	}
-	
-	public void setReplyId(Integer replyId) {
-		this.replyId = replyId;
-	}
-	
-	public String getReplyContent() {
-		return replyContent;
-	}
-	
-	public void setReplyContent(String replyContent) {
-		this.replyContent = replyContent;
-	}
-	
-	public Date getReplyTime() {
-		return replyTime;
-	}
-	
-	public void setReplyTime(Date replyTime) {
-		this.replyTime = replyTime;
-	}
-	
-	public String getReplyUserName() {
-		return replyUserName;
-	}
+    private Integer replyid;
 
-	public void setReplyUserName(String replyUserName) {
-		this.replyUserName = replyUserName;
-	}
+    private String replycontent;
 
-	public Integer getCommentId() {
-		return commentId;
-	}
-	
-	public void setCommentId(Integer commentId) {
-		this.commentId = commentId;
-	}
-	
+    private Date replytime;
+
+    private String replyusername;
+
+    private Integer commentid;
+
+    public Integer getReplyid() {
+        return replyid;
+    }
+
+    public void setReplyid(Integer replyid) {
+        this.replyid = replyid;
+    }
+
+    public String getReplycontent() {
+        return replycontent;
+    }
+
+    public void setReplycontent(String replycontent) {
+        this.replycontent = replycontent == null ? null : replycontent.trim();
+    }
+
+    public Date getReplytime() {
+        return replytime;
+    }
+
+    public void setReplytime(Date replytime) {
+        this.replytime = replytime;
+    }
+
+    public String getReplyusername() {
+        return replyusername;
+    }
+
+    public void setReplyusername(String replyusername) {
+        this.replyusername = replyusername == null ? null : replyusername.trim();
+    }
+
+    public Integer getCommentid() {
+        return commentid;
+    }
+
+    public void setCommentid(Integer commentid) {
+        this.commentid = commentid;
+    }
 }
