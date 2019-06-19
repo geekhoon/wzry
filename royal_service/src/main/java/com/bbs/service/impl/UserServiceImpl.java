@@ -4,6 +4,7 @@ import com.bbs.dao.UserDao;
 import com.bbs.domain.User;
 import com.bbs.domain.UserExample;
 import com.bbs.service.UserService;
+import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +51,34 @@ public class UserServiceImpl implements UserService {
         }catch (Exception e){
             return null;
         }
+    }
+
+    @Override
+    public List<User> findByPage(User user) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        if (StringUtil.isNotEmpty(user.getUsername()))
+            criteria.andUsernameLike("%"+user.getUsername().trim()+"%");
+        if (user.getRole()!=null)
+            criteria.andRoleEqualTo(user.getRole());
+        userExample.setOrderByClause("role desc");
+        List<User> userList = userDao.selectByExample(userExample);
+        return userList;
+    }
+
+    @Override
+    public void changeStatus(Integer id) {
+        User user = userDao.selectByPrimaryKey(id);
+        if (user.getTalkstatus()==0){
+            user.setTalkstatus(1);
+        }else if (user.getTalkstatus()==1){
+            user.setTalkstatus(0);
+        }
+        userDao.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userDao.selectByPrimaryKey(id);
     }
 }

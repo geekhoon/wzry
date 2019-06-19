@@ -67,7 +67,7 @@
                 type:'post',
                 dataType:'json',
                 contentType:'application/json',
-                url:'manageUser/login.do',
+                url:'user/login.do',
                 data:JSON.stringify($("#login_form").serializeJson()),
                 success:function (data) {
                     if(data.success){

@@ -1,19 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Bug信息更改页面</title>
+    <title>用户信息更改页面</title>
 </head>
 <body>
-<div class="modal fade bugMsg-update-modal" tabindex="-1" role="dialog" aria-labelledby="bugMsg-update-modal">
+<div class="modal fade user-update-modal" tabindex="-1" role="dialog" aria-labelledby="user-update-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Bug信息更改</h4>
+                <h4 class="modal-title">用户信息更改</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal update_bugMsg_form">
+                <form class="form-horizontal update_user_form">
                     <div class="form-group">
                         <label for="periodName" class="col-sm-2 control-label">阶段名称</label>
                         <div class="col-sm-8">
