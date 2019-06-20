@@ -52,26 +52,22 @@
                             <table>
                                 <tr>
                                     <th>
-                                        <label for="user_name" class="control-label">标题:</label>
+                                        <label for="title" class="control-label">标题:</label>
                                     </th>
                                     <th>
-                                        <input type="text" id="user_name" class="form-control"
-                                               name="username" value="${userSearch.username}">
-                                        <input type="hidden" id="pageNum" name="pn" value="${userMsgs.pageNum}">
+                                        <input type="text" id="title" class="form-control"
+                                               name="title" value="${articleSearch.title}">
+                                        <input type="hidden" id="pageNum" name="pn" value="${articleMsgs.pageNum}">
                                     </th>
                                     <th>
-                                        <label for="user_role" class="control-label">用户组:</label>
+                                        <label for="article_sendername" class="control-label">创帖人:</label>
                                     </th>
                                     <th>
-                                        <select id="user_role" class="form-control" name="role">
-                                            <option ></option>
-                                            <option value=1 <c:if test="${userSearch.role==1}">selected</c:if> >普通用户</option>
-                                            <option value=2 <c:if test="${userSearch.role==2}">selected</c:if> >高级用户</option>
-                                            <option value=3 <c:if test="${userSearch.role==3}">selected</c:if> >超级管理员</option>
-                                        </select>
+                                        <input type="text" id="article_sendername" class="form-control"
+                                               name="sendername" value="${articleSearch.sendername}">
                                     </th>
                                     <th colspan="2">
-                                        <input type="button" value="查询" class="form-control btn-primary" onclick="searchUser(1)">
+                                        <input type="button" value="查询" class="form-control btn-primary" onclick="searchArticle(1)">
                                     </th>
                                 </tr>
                             </table>
@@ -84,48 +80,52 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>用户名</th>
-                        <th>用户组</th>
-                        <th>邮箱</th>
-                        <th>是否禁言</th>
-                        <th>最近登录时间</th>
+                        <th>标题</th>
+                        <th>内容</th>
+                        <th>创帖人</th>
+                        <th>是否置顶</th>
+                        <th>回复数</th>
+                        <th>点赞数</th>
+                        <th>浏览数</th>
+                        <th>所在交流区</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${userMsgs.list}" var="user">
-                            <tr>
-                                <td width="10%">${user.username}</td>
-                                <td width="10%" class="line-limit-length">
-                                    <c:if test="${user.role==1}">
-                                        普通用户
-                                    </c:if>
-                                    <c:if test="${user.role==2}">
-                                        高级用户
-                                    </c:if>
-                                    <c:if test="${user.role==3}">
-                                        超级管理员
-                                    </c:if>
+                        <c:forEach items="${articleMsgs.list}" var="article">
+                            <tr ondblclick="showArticle('${article.articleid}')">
+                                <td width="15%">${article.title}</td>
+                                <td width="30%" class="line-limit-length">
+                                    <c:out value="${article.content}"></c:out>
                                 </td>
-                                <td width="25%" class="line-limit-length">${user.email}</td>
-                                <td width="10%" class="line-limit-length">
-                                    <c:if test="${user.talkstatus==0}">
+                                <td width="5%" class="line-limit-length">${article.sendername}</td>
+                                <td width="5%" class="line-limit-length">
+                                    <c:if test="${article.istop==0}">
                                         否
                                     </c:if>
-                                    <c:if test="${user.talkstatus==1}">
+                                    <c:if test="${article.istop==1}">
                                         是
                                     </c:if>
                                 </td>
-                                <td width="25%">
-                                    ${user.lastlogintime}
+                                <td width="5%">
+                                    ${article.replycount}
                                 </td>
-                                <td width="12%">
-                                    <a href="#" role="button" class="btn btn-primary" data-toggle="modal" value="${user.userid}" data-target=".user-update-modal">审核</a>
-                                    <c:if test="${user.talkstatus==0}">
-                                        <a href="/user/changeStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}" role="button" class="btn btn-danger" >禁言</a>
+                                <td width="5%">
+                                    ${article.upvotecount}
+                                </td>
+                                <td width="5%">
+                                    ${article.browsecount}
+                                </td>
+                                <td width="15%">
+                                    ${article.zoneid}
+                                </td>
+                                <td width="15%">
+                                    <a href="#" role="button" class="btn btn-primary" data-toggle="modal" value="${article.articleid}" data-target=".article-update-modal">审核</a>
+                                    <c:if test="${article.istop==0}">
+                                        <a href="/article/changeStatus.do?id=${article.articleid}&pn=${articleMsgs.pageNum}&title=${articleSearch.title}&sendername=${articleSearch.sendername}" role="button" class="btn btn-danger" >置顶</a>
                                     </c:if>
-                                    <c:if test="${user.talkstatus==1}">
-                                        <a href="/user/changeStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}" role="button" class="btn btn-info" >恢复</a>
+                                    <c:if test="${article.istop==1}">
+                                        <a href="/article/changeStatus.do?id=${article.articleid}&pn=${articleMsgs.pageNum}&title=${articleSearch.title}&sendername=${articleSearch.sendername}" role="button" class="btn btn-info" >取消</a>
                                     </c:if>
                                 </td>
                             </tr>
@@ -139,7 +139,7 @@
             <div class="row">
                 <!--文字信息-->
                 <div class="col-md-6">
-                    当前第 ${userMsgs.pageNum} 页.总共 ${userMsgs.pages} 页.一共 ${userMsgs.total} 条记录
+                    当前第 ${articleMsgs.pageNum} 页.总共 ${articleMsgs.pages} 页.一共 ${articleMsgs.total} 条记录
                 </div>
 
                 <!--点击分页-->
@@ -147,35 +147,35 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <!--首页-->
-                            <li><a href="#" onclick="searchUser(1)">首页</a></li>
+                            <li><a href="#" onclick="searchArticle(1)">首页</a></li>
                             <!--上一页-->
                             <li>
-                                <c:if test="${userMsgs.hasPreviousPage}">
-                                        <a href="#" onclick="searchUser('${userMsgs.pageNum-1}')" aria-label="Previous">
+                                <c:if test="${articleMsgs.hasPreviousPage}">
+                                        <a href="#" onclick="searchArticle('${articleMsgs.pageNum-1}')" aria-label="Previous">
                                             <span aria-hidden="true">«</span>
                                         </a>
                                 </c:if>
                             </li>
 
-                            <c:forEach items="${userMsgs.navigatepageNums}" var="page_num">
-                                <c:if test="${page_num == userMsgs.pageNum}">
+                            <c:forEach items="${articleMsgs.navigatepageNums}" var="page_num">
+                                <c:if test="${page_num == articleMsgs.pageNum}">
                                     <li class="active"><a href="#">${page_num}</a></li>
                                 </c:if>
-                                <c:if test="${page_num != userMsgs.pageNum}">
-                                    <li><a href="#" onclick="searchUser('${page_num}')">${page_num}</a></li>
+                                <c:if test="${page_num != articleMsgs.pageNum}">
+                                    <li><a href="#" onclick="searchArticle('${page_num}')">${page_num}</a></li>
                                 </c:if>
                             </c:forEach>
 
                             <!--下一页-->
                             <li>
-                                <c:if test="${userMsgs.hasNextPage}">
-                                    <a href="javascript:void(0)" onclick="searchUser('${userMsgs.pageNum+1}')"
+                                <c:if test="${articleMsgs.hasNextPage}">
+                                    <a href="javascript:void(0)" onclick="searchArticle('${articleMsgs.pageNum+1}')"
                                        aria-label="Next">
                                         <span aria-hidden="true">»</span>
                                     </a>
                                 </c:if>
                             </li>
-                            <li><a href="javascript:void(0)" onclick="searchUser('${userMsgs.pages}')">尾页</a></li>
+                            <li><a href="javascript:void(0)" onclick="searchArticle('${articleMsgs.pages}')">尾页</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -187,16 +187,27 @@
 
 </div><!-- /.hrms_dept_container -->
 
-<%@ include file="UserAdd.jsp"%>
-<%@ include file="UserUpdate.jsp"%>
+<%--<%@ include file="ArticleAdd.jsp"%>--%>
+<%@ include file="ArticleUpdate.jsp"%>
 </body>
 <script>
-    function searchUser(pn) {
+    function searchArticle(pn) {
         $('#pageNum').val(pn);
-        $("#searchForm").attr('action','/user/findByPage.do');
-        $("#searchForm").submit();
+        $("#articleSearchForm").attr('action','/article/findByPage.do');
+        $("#articleSearchForm").submit();
     }
 
+    function showArticle(id) {
+        $.ajax({
+            url:'/article/findById.do?id='+id,
+            type:'get',
+            success:function (res) {
+                $("#detail_title").val(res.title);
+                $("#detail_content").val(res.content);
+                $("#article_detail").modal();
+            }
+        })
+    }
 
 </script>
 </html>

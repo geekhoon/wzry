@@ -11,5 +11,9 @@ public interface IArticleService {
 
     public void addArticle(Article article);
 
-    List<Article> findByPage(Article comment);
+    List<Article> findByPage(Article article);
+
+    void changeStatus(Integer id);
+
+    Article findById(Integer id);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -22,6 +23,7 @@ public class UserController {
 
     /**
      * 登录
+     *
      * @param user
      * @return
      */
@@ -39,6 +41,7 @@ public class UserController {
 
     /**
      * 分页,条件查询
+     *
      * @param model
      * @param pageNum
      * @param user
@@ -46,6 +49,12 @@ public class UserController {
      */
     @GetMapping("/findByPage.do")
     public String findByPage(Model model, @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pageNum, User user) {
+        try {
+            if (user.getUsername() != null)
+                user.setUsername(new String(user.getUsername().getBytes("ISO-8859-1"), "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         PageHelper.startPage(pageNum, 6);
         List<User> list = userService.findByPage(user);
         PageInfo pageInfo = new PageInfo(list, 6);
@@ -56,6 +65,7 @@ public class UserController {
 
     /**
      * 修改禁言状态
+     *
      * @param id
      * @param pageNum
      * @param user
@@ -63,14 +73,14 @@ public class UserController {
     @GetMapping("/changeStatus.do")
     public String changeStatus(@RequestParam("id") Integer id, @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pageNum, User user) {
         userService.changeStatus(id);
-        String username="";
-        if (user.getUsername()!=null){
-            username=user.getUsername();
+        String username = "";
+        if (user.getUsername() != null) {
+            username = user.getUsername();
         }
-        if (user.getRole()!=null){
-            return "redirect:/user/findByPage.do?username="+username+"&pn="+pageNum+"&role="+user.getRole();
-        }else{
-            return "redirect:/user/findByPage.do?username="+username+"&pn="+pageNum+"&role=";
+        if (user.getRole() != null) {
+            return "redirect:/user/findByPage.do?username=" + username + "&pn=" + pageNum + "&role=" + user.getRole();
+        } else {
+            return "redirect:/user/findByPage.do?username=" + username + "&pn=" + pageNum + "&role=";
         }
 //        return "forward:/user/findByPage.do?pn="+pageNum+"&username="+user.getUsername()+"&role="+user.getRole();
 
@@ -78,16 +88,15 @@ public class UserController {
 
     /**
      * 根据用户id查询信息
+     *
      * @param id
      * @return
      */
     @ResponseBody
     @GetMapping("/findById.do")
     public User findById(Integer id) {
-        User user=userService.findById(id);
+        User user = userService.findById(id);
         return user;
     }
-
-
 
 }

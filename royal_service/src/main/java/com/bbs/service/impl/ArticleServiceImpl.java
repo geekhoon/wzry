@@ -38,11 +38,24 @@ public class ArticleServiceImpl implements IArticleService {
             criteria.andTitleLike("%"+article.getTitle().trim()+"%");
         if (StringUtil.isNotEmpty(article.getSendername()))
             criteria.andSendernameLike("%"+article.getSendername().trim()+"%");
-        articleExample.setOrderByClause("isTop desc");
-        articleExample.setOrderByClause("sendTime desc");
-        articleExample.setOrderByClause("upvoteCount desc");
-        articleExample.setOrderByClause("browseCount desc");
-        List<Article> articleList = articleDao.selectByExample(articleExample);
+        articleExample.setOrderByClause("isTop desc,sendTime desc,upvoteCount desc,browseCount desc");
+        List<Article> articleList = articleDao.selectByExampleWithBLOBs(articleExample);
         return articleList;
+    }
+
+    @Override
+    public void changeStatus(Integer id) {
+        Article article = articleDao.selectByPrimaryKey(id);
+        if (article.getIstop()==0){
+            article.setIstop(1);
+        }else{
+            article.setIstop(0);
+        }
+        articleDao.updateByPrimaryKey(article);
+    }
+
+    @Override
+    public Article findById(Integer id) {
+        return articleDao.selectByPrimaryKey(id);
     }
 }
