@@ -13,18 +13,19 @@
         <div class="hm-inner-r r">
             <div class="box">
                 <a href="javascript:;" id="login" class="to-login">游客登录</a>
-                <a href="${pageContext.request.contextPath}/user/findRegister.do">【新用户注册】</a>
+                <a href="${pageContext.request.contextPath}/user/findRegister.do" id="regist">新用户注册</a>
                 <div id="dialogBg"></div>
                 <div id="dialog" class="animated">
                     <img class="dialogIco" width="50" height="40" src="${pageContext.request.contextPath}/images/ico.png"/>
                     <div class="dialogTop" style="height:25px;">
                         <a href="javascript:;" class="closeDialogBtn">关闭</a>
                     </div>
-                    <form action="" method="post">
+                    <form action="" id="LoginForm" method="post">
                         <ul class="editInfos">
+                            <span id="check_in"></span>
                             <li>用户名：<input type="text" id="userName" name="userName" class="ipt"/></li>
                             <li>密&nbsp;&nbsp;&nbsp;码：<input type="password" id="userPass" name="userPass" class="ipt"/></li>
-                            <li><input type="submit" value="登录" class="submitBtn"/></li>
+                            <li><input type="button" id="login_btn" value="登录" class="submitBtn"/></li>
                         </ul>
                     </form>
                 </div>
@@ -52,43 +53,63 @@
           });
       });
 
-      //校验用户名
-      function checkUserName() {
-          $("#checkUserName").text("");
-          $("#checkUserName").attr("style","display:none");
-          var userName_reg = $("#userName_reg").val();
-          var userName_Reg =/^[a-zA-Z0-9_]+$/;
-          var boolean = userName_Reg.test(userName_reg);
-          if("" == userName_reg){
-              alert("用户名不能为空!");
+      //用户名非空校验
+      function checkUserName(){
+          var userName_log = $("#userName").val();
+          var userName_Reg = /^\s*$/;
+          var boolean = userName_Reg.test(userName_log);
+          if(boolean){
               return false;
           }else{
-              if (boolean){
-                  return true;
-              }else{
-                  alert("用户名格式错误,请重新输入");
-                  return false;
-              }
+              return true;
           }
       }
 
-      //校验密码
-      function checkPassWord() {
-          var userPass_in = $("#userPass_reg").val();
-          var userPass_Reg =/^[a-zA-Z0-9]{6,10}$/;
-          var boolean = userPass_Reg.test(userPass_in);
-          if("" == userPass_in){
-              alert("密码不能为空!");
+      //密码非空校验
+      function checkPassWord(){
+          var userPass_log = $("#userPass").val();
+          var userPass_Reg = /^\s*$/;
+          var boolean = userPass_Reg.test(userPass_log);
+          if(boolean){
               return false;
           }else{
-              if (boolean){
-                  return true;
-              }else{
-                  alert("密码格式错误");
-                  return false;
-              }
+              return true;
           }
       }
+
+      $("#login_btn").click(function () {
+          if(checkUserName() && checkPassWord()){
+              //可以往后台发送登录请求;
+              $.ajax({
+                  type:"POST",
+                  url:"${pageContext.request.contextPath}/user/userLogin.do",
+                  data:{"username":$("#userName").val(),"userpass":$("#userPass").val()},
+                  dataType:"JSON",
+                  success:function(data){
+                      if(data !=null ){
+                          location.href="${pageContext.request.contextPath}/user/findIndex.do";
+                      }else{
+                          alert("用户名或密码错误");
+                      }
+                  }
+              })
+          }else{
+              //用户名或密码输入非法
+              alert("请输入用户名和密码");
+          }
+      });
+
+        //查询已登录的用户信息
+      $.post("${pageContext.request.contextPath}/user/findUser.do",{},function(data){
+          if(data!=null){
+              $("#login").text("欢迎"+data.username+"回来");
+              $("#regist").text("注销");
+          }
+      },"json");
+
+      //调用方法校验用户名及密码
+      $("#userName").blur(checkUserName);
+      $("#userName").blur(checkUserName);
 
   });
 </script>

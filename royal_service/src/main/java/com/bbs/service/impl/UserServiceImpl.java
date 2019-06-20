@@ -18,12 +18,6 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User findUserByuserNameAndpassWord(String userName, String userPass) {
-        User user = userDao.login(userName, userPass);
-        return user;
-    }
-
-    @Override
     public User findUserByuserName(String userName) {
         User user = userDao.findUserByName(userName);
         return user;
@@ -84,5 +78,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         return userDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public User login(User user) {
+        updateLastLoginTime(user);
+        return userDao.login(user);
+    }
+
+    @Override
+    public void updateLastLoginTime(User user) {
+        Date last_LoginTime = new Date();
+        user.setLastlogintime(last_LoginTime);
+        userDao.updateLoginTime(user);
     }
 }

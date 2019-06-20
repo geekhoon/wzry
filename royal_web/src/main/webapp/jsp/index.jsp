@@ -41,7 +41,7 @@
         <!--头部，帖子统计，搜索-->
         <div class="hm-bbs-info">
             <div class="hm-bbs-icon l" style="width:130px;">
-                <span><img src="images/bbs-icon.png" height="80"/></span>
+                <span><img src="${pageContext.request.contextPath}/images/bbs-icon.png" height="80"/></span>
             </div>
             <div class="hm-bbs-info-in l" style="margin-left:30px;">
                 <div class="t clearfix"><h2 class="l">王者荣耀</h2></div>
@@ -180,11 +180,11 @@
                     </h3>
                     <ul class="b clearfix">
                         <li>
-                            <div><img src="images/default.png" height="55"/> </div>
+                            <div><img src="${pageContext.request.contextPath}/images/default.png" height="55"/> </div>
                             <p>Mr.King</p>
                         </li>
                         <li>
-                            <div><img src="images/default.png" height="55"/></div>
+                            <div><img src="${pageContext.request.contextPath}/images/default.png" height="55"/></div>
                             <p>疯子</p>
                         </li>
                     </ul>

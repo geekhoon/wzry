@@ -272,4 +272,8 @@
       talkStatus = #{talkstatus,jdbcType=INTEGER}
     where userId = #{userid,jdbcType=INTEGER}
   </update>
+
+  <select id="login" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+    Select * from bbs_user_table where userName = #{username} and userPass= #{userpass}
+  </select>
 </mapper>
