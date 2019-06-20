@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by geekhoon on 2019/6/18.
@@ -26,8 +28,34 @@ public class ArticleServiceImpl implements IArticleService {
      * @param article
      */
     @Override
-    public void addArticle(Article article) {
-        articleDao.insert(article);
+    public Integer addArticle(Article article) {
+       articleDao.insert(article);
+       return article.getArticleid();
+
+    }
+
+    @Override
+    public Integer getTotalCount() {
+        return articleDao.getTotalCount();
+    }
+
+    @Override
+    public Integer getTodayCount() {
+        return articleDao.getTodayCount();
+    }
+
+    @Override
+    public void upvoteChange(Integer i, Integer articleid) {
+        Map<String,Integer> map = new HashMap();
+        map.put("i",i);
+        map.put("articleid",articleid);
+        articleDao.upvoteChange(map);
+    }
+
+    @Override
+    public Integer findUpvoteCount(Integer articleid) {
+
+        return articleDao.findUpvoteCount(articleid);
     }
 
     @Override

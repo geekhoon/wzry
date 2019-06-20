@@ -5,6 +5,7 @@ import com.bbs.domain.ArticleExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ArticleDao {
     int countByExample(ArticleExample example);
@@ -13,7 +14,7 @@ public interface ArticleDao {
 
     int deleteByPrimaryKey(Integer articleid);
 
-    int insert(Article record);
+    Integer insert(Article record);
 
     int insertSelective(Article record);
 
@@ -34,4 +35,12 @@ public interface ArticleDao {
     int updateByPrimaryKeyWithBLOBs(Article record);
 
     int updateByPrimaryKey(Article record);
+
+    Integer getTotalCount();
+
+    Integer getTodayCount();
+
+    void upvoteChange(Map map);
+
+    Integer findUpvoteCount(Integer articleid);
 }

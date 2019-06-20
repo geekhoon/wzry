@@ -28,4 +28,6 @@ public interface CommentDao {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    List<Comment> findAll(Integer articleid);
 }

@@ -129,6 +129,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.bbs.domain.Article" >
+    <selectKey keyProperty="articleid" resultType="Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into bbs_article_table (articleId, title, sendTime, 
       senderName, isTop, replyCount, 
       upvoteCount, browseCount, zoneId, 
@@ -338,4 +341,19 @@
       zoneId = #{zoneid,jdbcType=INTEGER}
     where articleId = #{articleid,jdbcType=INTEGER}
   </update>
+  <select id="getTotalCount" resultType="Integer">
+    select count(1) from bbs_article_table;
+  </select>
+
+    <select id="getTodayCount" resultType="Integer">
+    select count(1) from bbs_article_table where to_days(sendTime) = to_days(now());
+  </select>
+
+  <update id="upvoteChange" parameterType="map" >
+    update bbs_article_table set upvoteCount = upvoteCount + #{i} where articleId = #{articleid}
+  </update>
+
+  <select id="findUpvoteCount" parameterType="Integer" resultType="Integer">
+    select upvoteCount from bbs_article_table where articleId = #{articleid}
+  </select>
 </mapper>

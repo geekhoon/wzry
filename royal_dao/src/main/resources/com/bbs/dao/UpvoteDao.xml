@@ -178,4 +178,6 @@
     where upvoteUserName = #{upvoteusername,jdbcType=VARCHAR}
       and upvoteArticleId = #{upvotearticleid,jdbcType=INTEGER}
   </update>
+
+
 </mapper>

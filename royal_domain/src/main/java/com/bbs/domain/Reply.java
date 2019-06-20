@@ -1,17 +1,22 @@
 package com.bbs.domain;
 
+import com.bbs.utils.DateUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Reply {
-    private Integer replyid;
+    private Integer replyid;//回复id
 
-    private String replycontent;
+    private String replycontent;//回复内容
 
-    private Date replytime;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    private Date replytime;//回复时间
 
-    private String replyusername;
+    private String replytimestr;
+    private String replyusername;//回复人
 
-    private Integer commentid;
+    private Integer commentid;//评论编号
 
     public Integer getReplyid() {
         return replyid;
@@ -35,6 +40,18 @@ public class Reply {
 
     public void setReplytime(Date replytime) {
         this.replytime = replytime;
+    }
+
+    public String getReplytimestr() {
+
+        if(replytime!=null){
+            replytimestr= DateUtils.date2String(replytime,"yyyy-MM-dd HH:mm:ss");
+        }
+        return replytimestr;
+    }
+
+    public void setReplytimestr(String replytimestr) {
+        this.replytimestr = replytimestr;
     }
 
     public String getReplyusername() {

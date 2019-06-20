@@ -12,6 +12,17 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/hm-bbs.js"></script>
 </head>
+<script>
+    $(function () {
+        $.post("/article/getTotalCount.do",{},function(result){
+            $("#totalCount").html("全部帖子<strong>"+result+"</strong>")
+        });
+        $.post("/article/getTodayCount.do",{},function(result){
+            $("#todayCount").html("今日帖子<strong>"+result+"</strong>")
+        });
+
+    })
+</script>
 <body>
 
 <!-- 头部 -->
@@ -35,8 +46,8 @@
             <div class="hm-bbs-info-in l" style="margin-left:30px;">
                 <div class="t clearfix"><h2 class="l">王者荣耀</h2></div>
                 <p>
-                    <span>今日帖子<strong>99</strong></span>
-                    <span>全部帖子<strong>250</strong></span>
+                    <span id="todayCount"></span>
+                    <span id="totalCount"></span>
                 </p>
             </div>
             <div class="search-box l">

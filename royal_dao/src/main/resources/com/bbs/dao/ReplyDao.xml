@@ -208,4 +208,7 @@
       commentId = #{commentid,jdbcType=INTEGER}
     where replyId = #{replyid,jdbcType=INTEGER}
   </update>
+  <select id="findAll" resultMap="BaseResultMap" parameterType="Integer">
+    select * from bbs_reply_table where commentId = #{commentid} order by replyTime asc;
+  </select>
 </mapper>

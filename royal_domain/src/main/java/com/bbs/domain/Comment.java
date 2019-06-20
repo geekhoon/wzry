@@ -1,19 +1,24 @@
 package com.bbs.domain;
 
+import com.bbs.utils.DateUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Comment {
     private Integer commentid;
 
-    private String commentcontent;
+    private String commentcontent;//评论内容
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    private Date commenttime;//评论时间
 
-    private Date commenttime;
+    private String commenttimestr;//评论时间
 
-    private String commentusername;
+    private String commentusername;//评论人
 
-    private Integer commentstatus;
+    private Integer commentstatus;//评论状态
 
-    private Integer articleid;
+    private Integer articleid;//帖子编号
 
     public Integer getCommentid() {
         return commentid;
@@ -29,6 +34,17 @@ public class Comment {
 
     public void setCommentcontent(String commentcontent) {
         this.commentcontent = commentcontent == null ? null : commentcontent.trim();
+    }
+
+    public String getCommenttimestr() {
+        if(commenttime!=null){
+            commenttimestr= DateUtils.date2String(commenttime,"yyyy-MM-dd HH:mm:ss");
+        }
+        return commenttimestr;
+    }
+
+    public void setCommenttimestr(String commenttimestr) {
+        this.commenttimestr = commenttimestr;
     }
 
     public Date getCommenttime() {

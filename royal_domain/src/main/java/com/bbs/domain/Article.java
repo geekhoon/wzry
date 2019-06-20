@@ -1,13 +1,20 @@
 package com.bbs.domain;
 
+import com.bbs.utils.DateUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Article {
     private Integer articleid;
 
     private String title;
-
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     private Date sendtime;
+
+
+
+    private String sendtimestr;
 
     private String sendername;
 
@@ -47,6 +54,17 @@ public class Article {
         this.sendtime = sendtime;
     }
 
+    public String getSendtimestr() {
+        if(sendtime!=null){
+            sendtimestr= DateUtils.date2String(sendtime,"yyyy-MM-dd HH:mm:ss");
+        }
+        return sendtimestr;
+    }
+
+    public void setSendtimestr(String sendtimestr) {
+        this.sendtimestr = sendtimestr;
+    }
+
     public String getSendername() {
         return sendername;
     }
@@ -54,6 +72,7 @@ public class Article {
     public void setSendername(String sendername) {
         this.sendername = sendername == null ? null : sendername.trim();
     }
+
 
     public Integer getIstop() {
         return istop;

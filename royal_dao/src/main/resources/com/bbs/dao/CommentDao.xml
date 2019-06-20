@@ -225,4 +225,7 @@
       articleId = #{articleid,jdbcType=INTEGER}
     where commentId = #{commentid,jdbcType=INTEGER}
   </update>
+  <select id="findAll" resultMap="BaseResultMap" parameterType="Integer">
+    select * from bbs_comment_table where articleId = #{articleid} order by commentTime asc;
+  </select>
 </mapper>

@@ -9,7 +9,15 @@ import java.util.List;
  */
 public interface IArticleService {
 
-    public void addArticle(Article article);
+    public Integer addArticle(Article article);
+
+    Integer getTotalCount();
+
+    Integer getTodayCount();
+
+    void upvoteChange(Integer i, Integer articleid);
+
+    Integer findUpvoteCount(Integer articleid);
 
     List<Article> findByPage(Article article);
 

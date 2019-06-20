@@ -28,4 +28,6 @@ public interface ReplyDao {
     int updateByPrimaryKeySelective(Reply record);
 
     int updateByPrimaryKey(Reply record);
+
+    List<Reply> findAll(Integer commentid);
 }

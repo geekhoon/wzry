@@ -496,7 +496,13 @@ a:visited {
   bottom: 10px;
 }
 /*回复*/
-.floor-con .icon-feedback i{
+.floor-con .icon-comment #id1{
+  background-position: -0px 0;
+}
+.floor-con .icon-comment #id2{
+  background-position: -64px -16px;
+}
+.floor-con .icon-feedback #id3{
   background-position: -16px 0;
 }
 
