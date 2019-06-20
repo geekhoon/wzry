@@ -7,8 +7,7 @@
                 <span class="glyphicon glyphicon-user" aria-hidden="true">用户管理</span>
             </a>
             <ul class="nav nav-pills nav-stacked">
-                <li role="presentation"><a href="#" >用户信息</a></li>
-                <li role="presentation"><a href="#" >权限分配</a></li>
+                <li role="presentation"><a href="/user/findByPage.do" >用户信息</a></li>
             </ul>
         </li>
     </ul>
@@ -18,7 +17,7 @@
                 <span class="glyphicon glyphicon-cloud" aria-hidden="true">用户帖管理</span>
             </a>
             <ul class="nav nav-pills nav-stacked">
-                <li role="presentation"><a href="#" class="bugMsg_info">帖子信息</a></li>
+                <li role="presentation"><a href="/article/findByPage.do" class="bugMsg_info">帖子信息</a></li>
             </ul>
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation"><a href="#" class="bugMsg_info">敏感词汇管理</a></li>
@@ -30,16 +29,5 @@
     </ul>
 </div>
 
-<script type="text/javascript">
-    $(".period_info").click(function () {
-
-        if($("#loginUser").val()!="zhangsan"){
-            alert("权限不足")
-        }else{
-            $(this).attr("href", "/period/findByPage.do");
-        }
-    });
-
-</script>
 </body>
 </html>
