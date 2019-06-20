@@ -88,8 +88,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateLastLoginTime(User user) {
-        Date last_LoginTime = new Date();
-        user.setLastlogintime(last_LoginTime);
+        Date lastLoginTime = new Date();
+        user.setLastlogintime(lastLoginTime);
         userDao.updateLoginTime(user);
     }
 }

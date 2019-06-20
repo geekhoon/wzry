@@ -13,6 +13,7 @@
         <div class="hm-inner-r r">
             <div class="box">
                 <a href="javascript:;" id="login" class="to-login">游客登录</a>
+
                 <a href="${pageContext.request.contextPath}/user/findRegister.do" id="regist">新用户注册</a>
                 <div id="dialogBg"></div>
                 <div id="dialog" class="animated">
@@ -102,8 +103,8 @@
         //查询已登录的用户信息
       $.post("${pageContext.request.contextPath}/user/findUser.do",{},function(data){
           if(data!=null){
-              $("#login").text("欢迎"+data.username+"回来");
-              $("#regist").text("注销");
+              $("#login").html("欢迎"+data.username+",回来");
+              $("#regist").html("注销");
           }
       },"json");
 

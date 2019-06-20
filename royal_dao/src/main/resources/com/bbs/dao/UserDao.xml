@@ -276,4 +276,8 @@
   <select id="login" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
     Select * from bbs_user_table where userName = #{username} and userPass= #{userpass}
   </select>
+
+  <update id="updateLoginTime" parameterType="com.bbs.domain.User" >
+    update bbs_user_table set lastLoginTime = #{lastlogintime} where username = #{username}
+  </update>
 </mapper>
