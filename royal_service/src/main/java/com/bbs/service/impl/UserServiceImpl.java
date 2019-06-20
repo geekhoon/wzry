@@ -7,6 +7,7 @@ import com.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service("UserService")
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean userRegist(User user) {
+        Date registDate = new Date();
+        user.setLastlogintime(registDate);
+        user.setTalkstatus(1);
         int num = userDao.userRegist(user);
         if (num > 0){
             return true;

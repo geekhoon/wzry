@@ -2,11 +2,14 @@ package com.bbs.controller;
 
 import com.bbs.domain.User;
 import com.bbs.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,11 +65,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userRegist.do")
-    public String userRegist(String userName,String userPass,String email){
-//        System.out.println(userName+"---"+userPass+"---"+email);
+    public @ResponseBody User userRegist(String username,String userpass,String email,HttpServletRequest request,RedirectAttributes redirectAttributes){
         User user = new User();
-        user.setUsername(userName);
-        user.setUserpass(userPass);
+        user.setUsername(username);
+        user.setUserpass(userpass);
         if ("".equals(email)){
             user.setEmail(null);
         }else{
@@ -76,11 +78,10 @@ public class UserController {
 
         if (regist){
             //注册成功
-
+            return user;
         }else{
             //注册失败
+            return null;
         }
-
-        return null;
     }
 }

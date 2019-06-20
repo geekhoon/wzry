@@ -30,45 +30,46 @@ public interface UserDao {
 
     int updateByPrimaryKey(User record);
 
-    @Select("Select * from bbs_user_table where userName = #{userName} and userPass= #{userPass}")
+    @Select("Select * from bbs_user_table where userName = #{username} and userPass= #{userpass}")
     @Results({
             @Result(id=true,property = "id",column="id"),
-            @Result(property = "userName",column="userName"),
-            @Result(property = "userPass",column="userPass"),
+            @Result(property = "username",column="userName"),
+            @Result(property = "userpass",column="userPass"),
             @Result(property = "email",column="email"),
-            @Result(property = "picUrl",column="picUrl"),
+            @Result(property = "picurl",column="picUrl"),
             @Result(property = "role",column="role"),
-            @Result(property = "lastLoginTime",column="lastLoginTime"),
-            @Result(property = "loginStatus",column="loginStatus"),
-            @Result(property = "talkStatus",column="talkStatus")
+            @Result(property = "lastlogintime",column="lastLoginTime"),
+            @Result(property = "loginstatus",column="loginStatus"),
+            @Result(property = "talkstatus",column="talkStatus")
     })
-    public User login(@Param("userName")String userName, @Param("userPass")String userPass);
+    public User login(@Param("username")String userName, @Param("userpass")String userPass);
 
-    @Select("select * from bbs_user_table where userName = #{userName}")
+    @Select("select * from bbs_user_table where userName = #{username}")
     @Results({
             @Result(id=true,property = "id",column="id"),
-            @Result(property = "userName",column="userName"),
-            @Result(property = "userPass",column="userPass"),
+            @Result(property = "username",column="userName"),
+            @Result(property = "userpass",column="userPass"),
             @Result(property = "email",column="email"),
-            @Result(property = "picUrl",column="picUrl"),
+            @Result(property = "picurl",column="picUrl"),
             @Result(property = "role",column="role"),
-            @Result(property = "lastLoginTime",column="lastLoginTime"),
-            @Result(property = "loginStatus",column="loginStatus"),
-            @Result(property = "talkStatus",column="talkStatus")
+            @Result(property = "lastlogintime",column="lastLoginTime"),
+            @Result(property = "loginstatus",column="loginStatus"),
+            @Result(property = "talkstatus",column="talkStatus")
     })
     User findUserByName(String userName);
 
-    @Insert("insert into bbs_user_table(userName,userPass,email) values(#{userName},#{userPass},#{email})")
+    @Insert("insert into bbs_user_table(userName,userPass,email,lastlogintime,talkstatus) " +
+            "values(#{username},#{userpass},#{email},#{lastlogintime},#{talkstatus})")
     @Results({
             @Result(id=true,property = "id",column="id"),
-            @Result(property = "userName",column="userName"),
-            @Result(property = "userPass",column="userPass"),
+            @Result(property = "username",column="userName"),
+            @Result(property = "userpass",column="userPass"),
             @Result(property = "email",column="email"),
-            @Result(property = "picUrl",column="picUrl"),
+            @Result(property = "picurl",column="picUrl"),
             @Result(property = "role",column="role"),
-            @Result(property = "lastLoginTime",column="lastLoginTime"),
-            @Result(property = "loginStatus",column="loginStatus"),
-            @Result(property = "talkStatus",column="talkStatus")
+            @Result(property = "lastlogintime",column="lastLoginTime"),
+            @Result(property = "loginstatus",column="loginStatus"),
+            @Result(property = "talkstatus",column="talkStatus")
     })
     int userRegist(User user);
 }
