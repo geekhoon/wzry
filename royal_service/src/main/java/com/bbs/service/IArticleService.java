@@ -24,4 +24,8 @@ public interface IArticleService {
     void changeStatus(Integer id);
 
     Article findById(Integer id);
+
+    List<Article> getArticleList();
+
+    Article getArticle(Integer articleid);
 }

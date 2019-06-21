@@ -86,24 +86,29 @@
             <div class="list-view l">
                 <ul>
 
-
-                    <li class="clearfix ding">
+                    <c:forEach items="${articleList}" var="article">
+                        <c:if test="${article.istop == 1}">
+                             <li class="clearfix ding">
+                        </c:if>
+                        <c:if test="${article.istop == 0}">
+                            <li class="clearfix">
+                        </c:if>
                         <div class="hm-index-title">
-                            <i class="set-to-top">顶</i> <a href="getArticle.do">求官方出艾琳英雄活动</a>
+                            <i class="set-to-top">顶</i> <a href="/article/getArticle.do?articleid=${article.articleid}">${article.title}</a>
                         </div>
-                        <div class="hm-index-con">本人玩得迟，所以看到别人用艾琳的时候，特别羡慕，现贵族6了，很想要一个艾琳，我身边很多朋友也想要，求</div>
+                        <div class="hm-index-con">${article.content}</div>
                         <div class="hm-index-info l">
-                            <span class="article-username">晨曦初露</span>
-                            <span class="post-time">2017-05-24 08:00:05</span>
+                            <span class="article-username">${article.sendername}</span>
+                            <span class="post-time">${article.sendtimestr}</span>
                         </div>
                         <div class="hm-index-fun r">
-                            <span class="icon-like"><i></i>1</span>
+                            <span class="icon-like"><i></i>${article.upvotecount}</span>
                             <span class="icon-talk"><i></i>0</span>
                         </div>
                     </li>
+                    </c:forEach>
 
-
-
+<%--
                     <li class="clearfix ding">
                         <div class="hm-index-title">
                             <i class="set-to-top">顶</i> <a href="getArticle.do">求官方出艾琳英雄活动</a>
@@ -163,7 +168,7 @@
                             <span class="icon-like"><i></i>3</span>
                             <span class="icon-talk"><i></i>10</span>
                         </div>
-                    </li>
+                    </li>--%>
 
 
                 </ul>

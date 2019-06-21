@@ -1,9 +1,15 @@
 package com.bbs.controller;
 
 import com.bbs.domain.Article;
+import com.bbs.domain.Comment;
+import com.bbs.domain.Reply;
+import com.bbs.domain.User;
 import com.bbs.service.IArticleService;
+import com.bbs.service.ICommentService;
+import com.bbs.service.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by geekhoon on 2019/6/18.
@@ -21,7 +29,10 @@ public class ArticleController {
 
     @Autowired
     private IArticleService articleService;
-
+    @Autowired
+    private ICommentService commentService;
+    @Autowired
+    private IReplyService replyService;
 
     /**
      * 发帖
@@ -30,9 +41,13 @@ public class ArticleController {
      */
     @RequestMapping("/add")
     public void addArticle(HttpServletRequest request, HttpServletResponse response, Article article) throws IOException {
-
+        User user = (User)request.getSession().getAttribute("user");
         article.setSendtime(new Date());
-        article.setSendername("geekhoon");
+        if (user == null){
+
+        }else{
+            article.setSendername(user.getUsername());
+        }
         article.setIstop(0);
         article.setReplycount(0);
         article.setUpvotecount(0);
@@ -73,6 +88,37 @@ public class ArticleController {
         request.getSession().setAttribute("upvoteCount",upvoteCount);
         return upvoteCount;
 
+    }
+
+    @RequestMapping("/getArticleList")
+    public String getArticleList(Model model){
+        List<Article> list = articleService.getArticleList();
+        model.addAttribute("articleList",list);
+
+        return "index";
+    }
+
+    @RequestMapping("/getArticle")
+    public void getArticle(Integer articleid,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Article article = articleService.getArticle(articleid);
+        request.getSession().setAttribute("article",article);
+        Integer upvoteCount = articleService.findUpvoteCount(articleid);
+        request.getSession().setAttribute("upvoteCount",upvoteCount);
+
+        List<Comment> list = commentService.findCommentList(articleid);
+        request.getSession().setAttribute("commentList",list);
+        HashMap map = new HashMap();
+        for (int i = 0; i < list.size(); i++) {
+            Comment comment = list.get(i);
+
+
+            List<Reply> replyList = replyService.findReplyList(comment.getCommentid());
+            map.put(comment.getCommentid(),replyList);
+        }
+
+        request.getSession().setAttribute("replyMap",map);
+
+        response.sendRedirect(request.getContextPath()+"/jsp/getArticle.jsp");
     }
 
 }

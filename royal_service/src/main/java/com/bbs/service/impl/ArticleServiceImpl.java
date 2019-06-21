@@ -86,4 +86,18 @@ public class ArticleServiceImpl implements IArticleService {
     public Article findById(Integer id) {
         return articleDao.selectByPrimaryKey(id);
     }
+
+    @Override
+    public List<Article> getArticleList() {
+
+        ArticleExample example = new ArticleExample();
+       /* ArticleExample.Criteria criteria = example.createCriteria();*/
+        example.setOrderByClause("istop desc");
+        return articleDao.selectByExample(example);
+    }
+
+    @Override
+    public Article getArticle(Integer articleid) {
+        return articleDao.selectByPrimaryKey(articleid);
+    }
 }
