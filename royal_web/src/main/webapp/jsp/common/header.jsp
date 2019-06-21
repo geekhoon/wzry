@@ -104,7 +104,9 @@
       $.post("${pageContext.request.contextPath}/user/findUser.do",{},function(data){
           if(data!=null){
               $("#login").html("欢迎"+data.username+",回来");
-              $("#regist").html("注销");
+              //$("#regist").html("注销");
+              $("#regist").html("<a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist'>注销</a>");
+
           }
       },"json");
 

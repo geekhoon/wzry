@@ -56,6 +56,13 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/userExist")
+    public String userExist(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        request.getSession().removeAttribute("username");
+        return "index";
+    }
+
     @RequestMapping(value = "/findUser.do" ,method = RequestMethod.POST)
     public @ResponseBody User findUser(HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("user");
