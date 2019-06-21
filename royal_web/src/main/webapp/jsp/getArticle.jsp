@@ -86,7 +86,7 @@
 
         <!--导航，回首页，帖子标题，排序-->
         <div class="detail-page-box clearfix">
-            <a href="index.html">
+            <a href="/index.jsp">
                 <i class="hm-ico-home"></i>首页
             </a>
             <span>></span>

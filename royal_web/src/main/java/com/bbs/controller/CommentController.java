@@ -1,6 +1,7 @@
 package com.bbs.controller;
 
 import com.bbs.domain.Comment;
+import com.bbs.domain.User;
 import com.bbs.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,9 @@ public class CommentController {
     @ResponseBody
     public void addComment(HttpServletRequest request, HttpServletResponse response, Comment comment){
        try {
+           User user = (User)request.getSession().getAttribute("user");
            comment.setCommenttime(new Date());
-           comment.setCommentusername("hoon");
+           comment.setCommentusername(user.getUsername());
            comment.setCommentstatus(0);
 
            commentService.addComment(comment);

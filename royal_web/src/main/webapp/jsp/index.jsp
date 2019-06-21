@@ -210,7 +210,12 @@
 
 <!-- 右边发帖，回顶部 -->
 <div class="fixedBar" id="j_fixedBar">
-    <a id="newTopicBtn" href="javascript:;" class="newTopic"><span></span>发帖</a>
+    <c:if test="${not empty user.username && !(user.username eq null) }">
+        <a id="newTopicBtn" href="javascript:;" class="newTopic"><span></span>发帖</a>
+    </c:if>
+    <c:if test="${empty user.username || (user.username eq null) }">
+        <a href="javascript:alert('请先登录！')" class="newTopic"><span></span>发帖</a>
+    </c:if>
     <a href="#" class="goTop"><i></i><span>返回<br/>顶部</span></a>
 </div>
 
@@ -241,4 +246,5 @@
 
 
 </body>
+
 </html>

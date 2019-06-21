@@ -1,6 +1,7 @@
 package com.bbs.controller;
 
 import com.bbs.domain.Reply;
+import com.bbs.domain.User;
 import com.bbs.service.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,8 @@ public class ReplyController {
     @RequestMapping("/add")
     @ResponseBody
     public void addReply(HttpServletRequest request, HttpServletResponse response,Reply reply) throws IOException {
-
-        reply.setReplyusername("ye");
+        User user = (User)request.getSession().getAttribute("user");
+        reply.setReplyusername(user.getUsername());
         replyService.addReply(reply);
         List<Reply> list = replyService.findReplyList(reply.getCommentid());
         map.put(reply.getCommentid(),list);
