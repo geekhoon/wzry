@@ -100,4 +100,19 @@ public class ArticleServiceImpl implements IArticleService {
     public Article getArticle(Integer articleid) {
         return articleDao.selectByPrimaryKey(articleid);
     }
+
+    @Override
+    public void replyChange(Integer articleid) {
+        articleDao.replyChange(articleid);
+    }
+
+    @Override
+    public Integer findReplyCount(Integer articleid) {
+        return articleDao.findReplyCount(articleid);
+    }
+
+    @Override
+    public void updateReportStatus(Integer articleid) {
+        articleDao.updateReportStatus(articleid);
+    }
 }

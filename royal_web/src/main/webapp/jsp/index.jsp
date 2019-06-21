@@ -103,7 +103,7 @@
                         </div>
                         <div class="hm-index-fun r">
                             <span class="icon-like"><i></i>${article.upvotecount}</span>
-                            <span class="icon-talk"><i></i>0</span>
+                            <span class="icon-talk"><i></i>${article.replycount}</span>
                         </div>
                     </li>
                     </c:forEach>

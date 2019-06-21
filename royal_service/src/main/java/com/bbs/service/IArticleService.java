@@ -28,4 +28,10 @@ public interface IArticleService {
     List<Article> getArticleList();
 
     Article getArticle(Integer articleid);
+
+    void replyChange(Integer articleid);
+
+    Integer findReplyCount(Integer articleid);
+
+    void updateReportStatus(Integer articleid);
 }

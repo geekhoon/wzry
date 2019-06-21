@@ -353,7 +353,19 @@
     update bbs_article_table set upvoteCount = upvoteCount + #{i} where articleId = #{articleid}
   </update>
 
+  <update id="replyChange" parameterType="Integer" >
+    update bbs_article_table set replyCount = replyCount + 1 where articleId = #{articleid}
+  </update>
+
   <select id="findUpvoteCount" parameterType="Integer" resultType="Integer">
     select upvoteCount from bbs_article_table where articleId = #{articleid}
   </select>
+
+  <select id="findReplyCount" parameterType="Integer" resultType="Integer">
+    select replyCount from bbs_article_table where articleId = #{articleid}
+  </select>
+
+  <update id="updateReportStatus" parameterType="Integer">
+    update bbs_article_table set isReport = 1 where articleId = #{articleid}
+  </update>
 </mapper>

@@ -13,13 +13,6 @@
     <link rel="stylesheet" type="text/css" href="../css/getArticle.css"/>
     <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="../js/hm-bbs.js"></script>
-    <%--<script >
-        $(function () {
-            $.post("/article/getUpvoteCount.do",{"articleid":},function(result){
-                $("#upvoteCount").html("<a href='#'><i></i>"+result+"</a>");
-            });
-        })
-    </script>--%>
 </head>
 <body>
 
@@ -44,8 +37,8 @@
 					     <span class="icon-like" id="upvoteCount">
                             <a href='#'><i></i>${upvoteCount}</a>
 					     </span>
-                        <span class="icon-talk">
-						     <i></i>10
+                        <span class="icon-talk" id="replyCount">
+						     <a href='#'><i></i>${replyCount}</a>
 						</span>
                     </div>
                 </div>
@@ -93,16 +86,20 @@
                             <div class="floor-ans"></div>
                         </div>
                         <span class="icon-comment">
-                            <a href="#comment"> <i></i> 评论</a>
+
 
                              <c:if test="${not empty user.username && !(user.username eq null) }">
+                                 <a href="#comment" > <i></i> 评论</a>
                                  <a href="javascript:;" onclick="upvote(${article.articleid})"> <i id="id1"></i> 点赞</a>
+                                 <a href="javascript:;" onclick="showDialog1()"> <i id="id2"></i> 举报</a>
                              </c:if>
                             <c:if test="${empty user.username || (user.username eq null) }">
+                                <a href="javascript:alert('请先登录！')"> <i></i> 评论</a>
                                 <a href="javascript:alert('请先登录！')"> <i id="id1"></i> 点赞</a>
+                                <a href="javascript:alert('请先登录！')"> <i id="id2"></i> 举报</a>
                             </c:if>
 
-                             <a href="javascript:;" onclick="showDialog(1);getCommentId(${comment.commentid})"> <i id="id2"></i> 举报</a>
+
                         </span>
 
 
@@ -251,7 +248,7 @@
                     </div>
                     <div class="con-b">
                         <%--<input type="button" class="btn" id="btn_commentSub" value="提交"/> --%>
-                        <input type="submit" class="btn"/>
+                        <input type="submit" class="btn" onclick="reply(${article.articleid})"/>
                         <span class="num">不能超过5000字</span>
                     </div>
                 </div>
@@ -287,12 +284,36 @@
             <div class="win_bd">
                 <div class="win_bd_b">
                     <input type="hidden" value="" name="commentid" id="commentid">
-                    <textarea id="replyContent" name="replycontent" placeholder="回复内容限于40字以内"></textarea>
+                    <textarea id="replyContent" name="replycontent" required="required" placeholder="回复内容限于40字以内"></textarea>
                 </div>
             </div>
             <div class="win_ft">
                 <div class="win_ft_in">
-                    <input type="submit" class="btn" value="回复"/>
+                    <input type="submit" class="btn" value="回复" onclick="reply(${article.articleid})" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- 举报弹出框 -->
+<form id="report_form">
+    <div class="pop-box1 ft-box">
+        <div class="mask"></div>
+        <div class="win">
+            <div class="win_hd">
+                <h4 class="l">举报本帖</h4>
+                <span class="close r">&times;</span>
+            </div>
+            <div class="win_bd">
+                <div class="win_bd_b">
+                    <input type="hidden" name="articleid" value="${article.articleid}">
+                    <textarea id="reportContent" name="reportcontent" placeholder="举报内容限于400字以内"></textarea>
+                </div>
+            </div>
+            <div class="win_ft">
+                <div class="win_ft_in">
+                    <input type="button" class="btn" value="举报" id="btn_reportSub"/>
                 </div>
             </div>
         </div>
@@ -322,6 +343,9 @@ function showDialog(num) {
     $('.pop-box').css('display', 'block');
     $("#floorSpan").html(num);
 }
+function showDialog1() {
+    $('.pop-box1').css('display', 'block');
+}
 </script>
 <script>
     function getCommentId(id){
@@ -340,6 +364,63 @@ function showDialog(num) {
             $("#upvoteCount").html("<a href='#'><i></i>"+result+"</a>");
         });
     }
+    function reply(articleid) {
+        $.post("/article/replyChange.do",{"articleid":articleid},function(result){
+            /* $("#totalCount").html("全部帖子<strong>"+result+"</strong>")*/
+            $("#upvoteCount").html("<a href='#'><i></i>"+result+"</a>");
+        });
+    }
+</script>
+<script>
+    $.fn.serializeJson=function(){
+        var serializeObj={};
+        var array=this.serializeArray();
+        var str=this.serialize();
+        $(array).each(function(){
+            if(serializeObj[this.name]){
+                if($.isArray(serializeObj[this.name])){
+                    serializeObj[this.name].push(this.value);
+                }else{
+                    serializeObj[this.name]=[serializeObj[this.name],this.value];
+                }
+            }else{
+                serializeObj[this.name]=this.value;
+            }
+        });
+        return serializeObj;
+    };
+    $(function () {
+
+        //1.给按钮绑定单击事件
+        $("#btn_reportSub").click(function () {
+            var content = $("#reportContent").val();
+            if(content == "" || content == undefined){
+                alert("请输入举报内容");
+                return;
+            }
+
+
+
+            //2.发送ajax请求，提交表单数据
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                contentType:'application/json',
+                url:'/report/add.do',
+                data:JSON.stringify($("#report_form").serializeJson()),
+                success:function (data) {
+                    $('.pop-box1').css('display', 'none');
+                    if (data.success) {
+                        alert("举报成功！")
+                    }else if(data.code == 99998){
+                        alert("不能举报自己的帖子！")
+                    }else {
+                        alert("举报失败！")
+                    }
+                }
+            });
+        });
+    });
 </script>
 
 </html>

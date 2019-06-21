@@ -55,10 +55,12 @@ public class ArticleController {
         article.setZoneid(1);
         Integer articleid =  articleService.addArticle(article);
         Integer upvoteCount = articleService.findUpvoteCount(articleid);
+        Integer replyCount = articleService.findReplyCount(articleid);
         article.setArticleid(articleid);
         article.setUpvotecount(upvoteCount);
         request.getSession().setAttribute("article",article);
         request.getSession().setAttribute("upvoteCount",upvoteCount);
+        request.getSession().setAttribute("replyCount",replyCount);
         response.sendRedirect(request.getContextPath()+"/jsp/getArticle.jsp");
     }
 
@@ -89,6 +91,20 @@ public class ArticleController {
         return upvoteCount;
 
     }
+    @RequestMapping("/replyChange")
+    @ResponseBody
+    public Integer replyChange(Integer articleid,HttpServletRequest request) throws IOException {
+
+        articleService.replyChange(articleid);
+        Integer replyCount = articleService.findReplyCount(articleid);
+        request.getSession().setAttribute("replyCount",replyCount);
+        return replyCount;
+
+    }
+
+
+
+
 
     @RequestMapping("/getArticleList")
     public String getArticleList(Model model){
@@ -104,7 +120,8 @@ public class ArticleController {
         request.getSession().setAttribute("article",article);
         Integer upvoteCount = articleService.findUpvoteCount(articleid);
         request.getSession().setAttribute("upvoteCount",upvoteCount);
-
+        Integer replyCount = articleService.findReplyCount(articleid);
+        request.getSession().setAttribute("replyCount",replyCount);
         List<Comment> list = commentService.findCommentList(articleid);
         request.getSession().setAttribute("commentList",list);
         HashMap map = new HashMap();

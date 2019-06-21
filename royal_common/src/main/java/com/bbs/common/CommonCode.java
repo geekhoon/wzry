@@ -14,7 +14,8 @@ public enum CommonCode implements ResultCode{
     UNAUTHENTICATED(false,10001,"此操作需要登陆系统！"),
     UNAUTHORISE(false,10002,"权限不足，无权操作！"),
     LOGINFAIL(false,10003,"账号或密码错误！"),
-    SERVER_ERROR(false,99999,"抱歉，系统繁忙，请稍后重试！");
+    SERVER_ERROR(false,99999,"抱歉，系统繁忙，请稍后重试！"),
+    USERNAMEREPEAT(false,99998,"用户名重复");
 //    private static ImmutableMap<Integer, CommonCode> codes ;
     //操作是否成功
     boolean success;
