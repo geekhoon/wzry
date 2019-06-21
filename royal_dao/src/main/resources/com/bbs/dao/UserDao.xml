@@ -280,4 +280,12 @@
   <update id="updateLoginTime" parameterType="com.bbs.domain.User" >
     update bbs_user_table set lastLoginTime = #{lastlogintime} where username = #{username}
   </update>
+
+  <select id="checkUserPass" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+    select * from bbs_user_table where userId = #{userid} and userPass = #{userpass}
+  </select>
+
+  <update id="changeUserPass" parameterType="com.bbs.domain.User" >
+update bbs_user_table set userPass = #{userpass} where userId = #{userid}
+  </update>
 </mapper>

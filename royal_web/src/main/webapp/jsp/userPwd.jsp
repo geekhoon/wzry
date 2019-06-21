@@ -9,11 +9,85 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common-new.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user_info.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/search.css"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/hm-bbs.js"></script>
     <style type="text/css">
         .hm-header-b { border-bottom: 1px solid #d9d9d9; }
     </style>
+
+    <script>
+        $(function () {
+            //校验密码框输入非空后发送ajax请求;
+            //if(checkNewPassword() && checkOldPassword()){
+
+                $("#change").click(function () {
+                    if(checkOldPassword() && checkNewPassword()){
+                        $.ajax({
+                            url:"${pageContext.request.contextPath}/user/userChangePass.do",
+                            type:"POST",
+                            data:{"userid":${sessionScope.user.userid},"oldPass":$("#oldPassword").val(),"newPass":$("#newPassword").val()},
+                            dataType:"text",
+                            success:function (data) {
+                                alert(typeof data);
+                                if(data=="error"){
+                                    //输入的旧密码错误
+                                    alert("请输入正确的密码");
+                                }else if(data == "success"){
+                                    alert("修改成功");
+                                }
+                            }
+                        });
+                    }
+                    }
+                )
+            //}
+
+            //校验密码框输入
+            function checkOldPassword() {
+                var oldPass = $("#oldPassword").val();
+                var oldPass_Reg = /^[a-zA-Z0-9]{6,10}$/;
+                var boolean = oldPass_Reg.test(oldPass);
+                if("" == oldPass){
+                    //alert("密码不能为空!");
+                    $("#oldPassword").css("border","1px solid red");
+                    return false;
+                }else{
+                    if (boolean){
+                        $("#oldPassword").css("border","1px solid green");
+                        return true;
+                    }else{
+                        //alert("密码格式错误");
+                        $("#oldPassword").css("border","1px solid red");
+                        return false;
+                    }
+                }
+            }
+
+            function checkNewPassword() {
+                var newPass = $("#newPassword").val();
+                var newPass_Reg = /^[a-zA-Z0-9]{6,10}$/;
+                var boolean = newPass_Reg.test(newPass);
+                if("" == newPass){
+                    //alert("密码不能为空!");
+                    $("#newPassword").css("border","1px solid red");
+                    return false;
+                }else{
+                    if (boolean){
+                        $("#newPassword").css("border","1px solid green");
+                        return true;
+                    }else{
+                        //alert("密码格式错误");
+                        $("#newPassword").css("border","1px solid red");
+                        return false;
+                    }
+                }
+            }
+
+            $("#oldPassword").blur(checkOldPassword);
+            $("#newPassword").blur(checkNewPassword);
+
+        })
+    </script>
 </head>
 <body>
 
@@ -28,7 +102,7 @@
     <div class="hm-inner clearfix">
         <div class="hm-header-t clearfix">
             <h1 class="logo l">
-                <a href="javascript:;"><img src="images/logo.png" alt=""/></a>
+                <a href="javascript:;"><img src="${pageContext.request.contextPath}/images/logo.png" alt=""/></a>
             </h1>
             <div class="search-box l">
                 <form action="javascript:;">
@@ -52,8 +126,8 @@
             <div class="user-info-t" style="height:20px;"></div>
             <div class="user-info-l l">
                 <div class="user-info-l-t">
-                    <img src="images/default.png" alt=""/>
-                    <div class="username">张无忌</div>
+                    <img src="${pageContext.request.contextPath}/images/default.png" alt=""/>
+                    <div class="username">${sessionScope.user.username}</div>
                 </div>
                 <ul class="user-info-l-b">
                     <li><i class="info-icon"></i>我的资料</li>
@@ -64,24 +138,24 @@
 
             <div class="user-info-r r">
                 <ul class="clearfix hd">
-                    <li><a href="getUser.do?method=userInfo">个人信息</a></li>
-                    <li class="cur"><a href="getUser.do?method=userPwd">修改密码</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user/findUserInfo.do">个人信息</a></li>
+                    <li class="cur"><a href="${pageContext.request.contextPath}/user/findUserPwd.do">修改密码</a></li>
                 </ul>
                 <form action="#" method="post">
                   <ul class="bd">
                     <li class="clearfix">
                         <div class="info-l"><i class="red">*</i>旧密码：</div>
-                        <div class="info-r"><input type="password" name="oldPassword" class="txt"/></div>
+                        <div class="info-r"><input type="password" name="oldPassword" id="oldPassword" class="txt"/></div>
                     </li>
                     <li class="clearfix">
                         <div class="info-l"><i class="red">*</i>新密码：</div>
-                        <div class="info-r"><input type="password" name="newPassword" class="txt"/></div>
+                        <div class="info-r"><input type="password" name="newPassword" id="newPassword" class="txt"/></div>
                     </li>
                     <li class="clearfix">
                         <div class="info-l"></div>
                         <div class="info-r">
-						  <input type="submit" class="btn" value="保存"/>
-						  <span style="color:red;">修改成功！</span>
+						  <input type="button" id="change" class="btn" value="保存"/>
+						  <span style="color:red;" id="changePassword"></span>
 						</div>
                     </li>
                   </ul>

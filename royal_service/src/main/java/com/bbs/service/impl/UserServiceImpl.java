@@ -92,4 +92,27 @@ public class UserServiceImpl implements UserService {
         user.setLastlogintime(lastLoginTime);
         userDao.updateLoginTime(user);
     }
+
+    @Override
+    public void changeUserPass(String userid, String newPass) {
+        User user = new User();
+        user.setUserid(Integer.parseInt(userid));
+        user.setUserpass(newPass);
+        userDao.changeUserPass(user);
+    }
+
+    @Override
+    public User checkUserPass(String userid, String oldPass) {
+        User u = new User();
+        u.setUserid(Integer.parseInt(userid));
+        u.setUserpass(oldPass);
+        User user = userDao.checkUserPass(u);
+        if (user != null){
+            //旧密码正确,查到用户
+            return user;
+        }else{
+            //旧密码错误,查不到用户
+            return user;
+        }
+    }
 }

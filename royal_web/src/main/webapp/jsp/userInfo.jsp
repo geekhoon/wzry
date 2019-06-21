@@ -28,7 +28,7 @@
     <div class="hm-inner clearfix">
         <div class="hm-header-t clearfix">
             <h1 class="logo l">
-                <a href="javascript:;"><img src="images/logo.png" height="64" width="168" alt=""/></a>
+                <a href="javascript:;"><img src="${pageContext.request.contextPath}/images/logo.png" height="64" width="168" alt=""/></a>
             </h1>
             <div class="search-box l">
                 <form action="javascript:;">
@@ -54,8 +54,8 @@
             <!--左侧用户名，头像-->
             <div class="user-info-l l">
                 <div class="user-info-l-t">
-                    <img src="images/default.png"/>
-                    <div class="username">张无忌</div>
+                    <img src="${pageContext.request.contextPath}/images/default.png"/>
+                    <div class="username">${sessionScope.user.username}</div>
                 </div>
                 <ul class="user-info-l-b">
                     <li class="cur"><i class="info-icon"></i>我的资料</li>
@@ -67,8 +67,8 @@
             <!--右侧用户信息-->
             <div class="user-info-r r">
                 <ul class="clearfix hd">
-                    <li class="cur"><a href="getUser.do?method=userInfo">个人信息</a></li>
-                    <li><a href="getUser.do?method=userPwd">修改密码</a></li>
+                    <li class="cur"><a href="${pageContext.request.contextPath}/user/findUserInfo.do">个人信息</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user/findUserPwd.do">修改密码</a></li>
                 </ul>
 
 
@@ -76,7 +76,7 @@
                     <ul class="bd">
                         <li class="clearfix">
                             <div class="info-l"><i class="red">*</i>用户名：</div>
-                            <div class="info-r"><input type="text" class="txt" value="" readonly="readonly"/></div>
+                            <div class="info-r"><input type="text" class="txt" value="${sessionScope.user.username}" readonly="readonly" /></div>
                         </li>
                         <li class="clearfix">
                             <div class="info-l">邮箱地址：</div>
@@ -95,11 +95,7 @@
                         </li>
                     </ul>
                 </form>
-
-
             </div>
-
-
         </div>
     </div>
 </div>

@@ -40,4 +40,8 @@ public interface UserService {
     User login(User user);
 
     void updateLastLoginTime(User user);
+
+    void changeUserPass(String userid, String newPass);
+
+    User checkUserPass(String userid, String oldPass);
 }

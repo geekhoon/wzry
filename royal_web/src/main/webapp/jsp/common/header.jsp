@@ -39,11 +39,13 @@
   $(function () {
       //显示弹框
       $('.box #login').click(function () {
-          var className = $(this).attr('class');
-          $('#dialogBg').fadeIn(300);
-          $('#dialog').removeAttr('class').addClass('animated ' + className + '').fadeIn();
-          $('#userName').focus();
-          $("#j_fixedBar").hide();
+          if(${sessionScope.username == null}){
+              var className = $(this).attr('class');
+              $('#dialogBg').fadeIn(300);
+              $('#dialog').removeAttr('class').addClass('animated ' + className + '').fadeIn();
+              $('#userName').focus();
+              $("#j_fixedBar").hide()
+          }
       });
 
       //关闭弹窗
@@ -103,8 +105,7 @@
         //查询已登录的用户信息
       $.post("${pageContext.request.contextPath}/user/findUser.do",{},function(data){
           if(data!=null){
-              $("#login").html("欢迎"+data.username);
-              //$("#regist").html("注销");
+              $("#login").html("欢迎,<a href='${pageContext.request.contextPath}/user/findUserInfo.do'>"+data.username+"</a>");
               $("#regist").html("<a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist'>注销</a>");
 
           }

@@ -62,4 +62,8 @@ public interface UserDao {
     int userRegist(User user);
 
     void updateLoginTime(User user);
+
+    User checkUserPass(User user);
+
+    void changeUserPass(User User);
 }
