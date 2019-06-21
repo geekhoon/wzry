@@ -51,6 +51,7 @@ public class UserController {
             return "false";
         }else{
             //登录成功
+            request.getSession().setAttribute("username",u.getUsername());
             request.getSession().setAttribute("user",u);
             return "true";
         }
