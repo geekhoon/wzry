@@ -145,10 +145,10 @@
                 <a href="javascript:;"><img src="${pageContext.request.contextPath}/images/logo.png" height="64" width="168" alt=""/></a>
             </h1>
             <div class="search-box l">
-                <form action="javascript:;">
+               <%-- <form action="javascript:;">
                     <input type="text" class="txt l" placeholder="请输入关键字">
                     <input type="button" value="搜索" class="btn l"/>
-                </form>
+                </form>--%>
             </div>
         </div>
         <div class="hm-header-b">

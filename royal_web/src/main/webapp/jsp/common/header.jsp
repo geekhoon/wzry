@@ -87,8 +87,8 @@
                   data:{"username":$("#userName").val(),"userpass":$("#userPass").val()},
                   dataType:"JSON",
                   success:function(data){
-                      if(data !=null ){
-                          location.href="${pageContext.request.contextPath}/user/findIndex.do";
+                      if(data){
+                          location.href="${pageContext.request.contextPath}/index.jsp";
                       }else{
                           alert("用户名或密码错误");
                       }
@@ -103,7 +103,7 @@
         //查询已登录的用户信息
       $.post("${pageContext.request.contextPath}/user/findUser.do",{},function(data){
           if(data!=null){
-              $("#login").html("欢迎"+data.username+",回来");
+              $("#login").html("欢迎"+data.username+"回来");
               //$("#regist").html("注销");
               $("#regist").html("<a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist'>注销</a>");
 

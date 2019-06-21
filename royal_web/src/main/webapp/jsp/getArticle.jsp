@@ -24,32 +24,7 @@
 <body>
 
 <!-- 头部 -->
-<div class="hm-top-nav">
-    <div class="hm-inner clearfix">
-        <div class="hm-inner-l l">
-        </div>
-        <div class="hm-inner-r r">
-            <div class="box">
-                欢迎<a href="user_info.html" style="margin-right:0px;padding:0px 5px;color:blue;">scott</a>回来！
-                <a href="#">【注销】</a>
-                <div id="dialogBg"></div>
-                <div id="dialog" class="animated">
-                    <img class="dialogIco" width="50" height="40" src="../images/ico.png"/>
-                    <div class="dialogTop" style="height:25px;">
-                        <a href="javascript:;" class="closeDialogBtn">关闭</a>
-                    </div>
-                    <form action="" method="post">
-                        <ul class="editInfos">
-                            <li>用户名：<input type="text" id="userName" name="userName" class="ipt"/></li>
-                            <li>密&nbsp;&nbsp;&nbsp;码：<input type="password" id="userPass" name="userPass" class="ipt"/></li>
-                            <li><input type="submit" value="登录" class="submitBtn"/></li>
-                        </ul>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<jsp:include page="common/header.jsp"/>
 
 
 
@@ -119,7 +94,14 @@
                         </div>
                         <span class="icon-comment">
                             <a href="#comment"> <i></i> 评论</a>
-                            <a href="javascript:;" onclick="upvote(${article.articleid})"> <i id="id1"></i> 点赞</a>
+
+                             <c:if test="${not empty user.username && !(user.username eq null) }">
+                                 <a href="javascript:;" onclick="upvote(${article.articleid})"> <i id="id1"></i> 点赞</a>
+                             </c:if>
+                            <c:if test="${empty user.username || (user.username eq null) }">
+                                <a href="javascript:alert('请先登录！')"> <i id="id1"></i> 点赞</a>
+                            </c:if>
+
                              <a href="javascript:;" onclick="showDialog(1);getCommentId(${comment.commentid})"> <i id="id2"></i> 举报</a>
                         </span>
 
@@ -166,7 +148,12 @@
                                 </ul>
                             </div>
                             <span class="icon-feedback">
-                                <a href="javascript:;" onclick="showDialog(1);getCommentId(${comment.commentid})"> <i id="id3"></i> 回复</a>
+                                    <c:if test="${not empty user.username && !(user.username eq null) }">
+                                         <a href="javascript:;" onclick="showDialog(1);getCommentId(${comment.commentid})"> <i id="id3"></i> 回复</a>
+                                    </c:if>
+                                 <c:if test="${empty user.username || (user.username eq null) }">
+                                     <a href="javascript:alert('请先登录！');" > <i id="id3"></i> 回复</a>
+                                 </c:if>
                             </span>
 
                         </div>
@@ -249,7 +236,7 @@
 
             </ul>
         </div>
-
+        <c:if test="${not empty user.username && !(user.username eq null) }">
         <!--发表评论-->
         <div class="detail-to-comment">
             <div class="tit"><a name="comment">发表评论</a></div>
@@ -270,6 +257,7 @@
                 </div>
             </form>
         </div>
+        </c:if>
     </div>
 </div>
 
@@ -314,7 +302,14 @@
 
 
 <div class="fixedBar" id="j_fixedBar">
-    <a href="#comment" class="newTopic"><span></span>回复</a>
+    <c:if test="${not empty user.username && !(user.username eq null) }">
+        <a href="#comment" class="newTopic"><span></span>评论</a>
+    </c:if>
+    <c:if test="${empty user.username || (user.username eq null) }">
+        <a href="javascript:alert('请先登录！')" class="newTopic"><span></span>评论</a>
+    </c:if>
+
+
     <a href="#" class="goTop"><i></i><span>返回<br/>顶部</span></a>
 </div>
 

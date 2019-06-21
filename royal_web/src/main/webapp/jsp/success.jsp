@@ -26,10 +26,6 @@
                 <a href="javascript:;"><img src="${pageContext.request.contextPath}/images/logo.png" height="64" width="168" alt=""/></a>
             </h1>
             <div class="search-box l">
-                <form action="javascript:;">
-                    <input type="text" class="txt l" placeholder="请输入关键字">
-                    <input type="button" value="搜索" class="btn l"/>
-                </form>
             </div>
         </div>
         <div class="hm-header-b">
@@ -43,7 +39,7 @@
 <div class="hm-body hm-body-bgc">
         <div class="hm-inner"> 
             <div class="reg-box" style="text-align:center;height:200px;padding-top:100px;">
-                <h2>恭喜您，注册成功！</h2>
+                <h2>恭喜您，注册成功！<a href="/index.jsp">前往首页</a></h2>
             </div>
         </div>
     </div>
