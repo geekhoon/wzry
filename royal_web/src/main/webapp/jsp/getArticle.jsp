@@ -308,7 +308,7 @@
             <div class="win_bd">
                 <div class="win_bd_b">
                     <input type="hidden" name="articleid" value="${article.articleid}">
-                    <textarea id="reportContent" name="reportcontent" placeholder="举报内容限于400字以内"></textarea>
+                    <textarea id="reportContent" name="reportcontent" required="required" placeholder="举报内容限于400字以内"></textarea>
                 </div>
             </div>
             <div class="win_ft">
@@ -410,6 +410,7 @@ function showDialog1() {
                 data:JSON.stringify($("#report_form").serializeJson()),
                 success:function (data) {
                     $('.pop-box1').css('display', 'none');
+                    $("#reportContent").val("");
                     if (data.success) {
                         alert("举报成功！")
                     }else if(data.code == 99998){
