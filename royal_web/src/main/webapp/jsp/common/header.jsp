@@ -111,6 +111,13 @@
           }
       });
 
+        //查询已登录的用户信息
+      $.post("${pageContext.request.contextPath}/user/findUser.do",{},function(data){
+          if(data!=null){
+              $("#login").html("欢迎,<a href='${pageContext.request.contextPath}/user/findUserInfo.do?userid='"+data.userid+">"+data.username+"</a>");
+              $("#regist").html("<a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist.do'>注销</a>");
+          }
+      },"json");
 
       //调用方法校验用户名及密码
       $("#userName").blur(checkUserName);

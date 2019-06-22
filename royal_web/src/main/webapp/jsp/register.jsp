@@ -14,12 +14,12 @@
         $(function () {
 
             var user_flag ;
+            var email_flag;
             //检验用户名
             $("#userName_reg").blur(function () {
-                //先校验用户名格式
                 if(checkUserName()){
-                    var userName_reg = $("#userName_reg").val();
-                    $.get("findUserByUserName.do",{"userName":userName_reg},function (data) {
+                    var userName = $("#userName_reg").val();
+                    $.get("findUserByUserName.do",{"userName":userName},function (data) {
                         $("#checkUserName").text("");
                         $("#checkUserName").attr("style","display:none");
                         if(data.username == null){
@@ -34,10 +34,32 @@
                         }
                     })
                 }
+
+                $("#email").blur(function () {
+                        if(checkEmail()){
+                            var userEmail = $("#email").val();
+                            $.get("checkUserEmail.do",{"email":userEmail},function (data) {
+                                $("#checkUserName").text("");
+                                $("#checkUserName").attr("style","display:none");
+                                if(data == "success"){
+                                    $("#checkUserName").html("该邮箱可以使用");
+                                    $("#checkUserName").prop("style","color:blue");
+                                    email_flag = true;
+                                }else{
+                                    $("#checkUserName").html("该邮箱已被注册");
+                                    $("#checkUserName").prop("style","color:red");
+                                    $("#email").css("border","1px solid red");
+                                    email_flag = false;
+                                }
+                            },"text")
+                        }
+                    }
+                )
+
             });
 
             $("#reg_btn").click(function () {
-                if(checkUserName() && checkPassWord() && checkEmail() && user_flag){
+                if(checkUserName() && checkPassWord() && checkEmail() && user_flag && email_flag){
                     $.ajax({
                         type:"POST",
                         url:"userRegist.do",
@@ -45,7 +67,7 @@
                         dataType:"JSON",
                         success:function (data) {
                             if(data.username != null){
-                                location.href="${pageContext.request.contextPath}/jsp/success.jsp";
+                                location.href="${pageContext.request.contextPath}/article/getArticleList.do";
                             }else{
                                 alert("注册失败,请联系管理员");
                             }
@@ -59,7 +81,7 @@
                 $("#checkUserName").text("");
                 $("#checkUserName").attr("style","display:none");
                 var userName_reg = $("#userName_reg").val();
-                var userName_Reg =/^[a-zA-Z0-9_]+$/;
+                var userName_Reg =/(?![a-z]+$|[0-9]+$|_+$)^[a-zA-Z0-9_]{6,}$/;
                 var boolean = userName_Reg.test(userName_reg);
                 $("#userName_reg").css({border:"none"});
                 if(userName_reg == ""){

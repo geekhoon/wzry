@@ -119,6 +119,49 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserEmail(Integer userid, String email) {
+        User user = new User();
+        user.setUserid(userid);
+        user.setEmail(email);
+        userDao.updateUserEmail(user);
+    }
+
+    @Override
+    public Boolean checkUserEmail(String email) {
+        User user = userDao.checkUserEmail(email);
+        if(user != null){
+            //该邮箱已被注册,无法使用
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void updateUserPicture(Integer userid, String filename) {
+        User user = new User();
+        user.setUserid(userid);
+        user.setPicurl(filename);
+        userDao.updateUserPicture(user);
+    }
+
+    @Override
+    public User findUserInfo(User user) {
+        User userInfo = userDao.findUserInfo(user);
+        return userInfo;
+    }
+
+    @Override
+    public String findUserPicture(String userid) {
+        User user = new User();
+        user.setUserid(Integer.parseInt(userid));
+        User u = userDao.findUserPicture(user);
+        if(u.getPicurl() == null){
+            return "images/default.png";
+        }
+        return u.getPicurl();
+    }
+
+    @Override
     public void updateLoginStatus(Integer userid, Integer loginstatus) {
         Map map = new HashMap<>();
         map.put("userid",userid);

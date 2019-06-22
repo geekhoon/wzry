@@ -292,4 +292,24 @@ update bbs_user_table set userPass = #{userpass} where userId = #{userid}
   <update id="updateLoginStatus" parameterType="map">
     update bbs_user_table set loginStatus = #{loginstatus} where userId = #{userid}
   </update>
+
+  <update id="updateUserEmail" parameterType="com.bbs.domain.User">
+    update bbs_user_table set email = #{email} where userId = #{userid}
+  </update>
+
+  <select id="checkUserEmail" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+    select * from bbs_user_table where email = #{email};
+  </select>
+
+  <update id="updateUserPicture" parameterType="com.bbs.domain.User" >
+    update bbs_user_table set picUrl = #{picurl} where userId = #{userid}
+  </update>
+
+  <select id="findUserInfo" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+    select * from bbs_user_table where userId= #{userid}
+  </select>
+
+  <select id="findUserPicture" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+    select * from bbs_user_table where userId = #{userid}
+  </select>
 </mapper>

@@ -48,4 +48,14 @@ public interface UserService {
     void updateLoginStatus(Integer userid, Integer loginstatus);
 
     List getOnlineUser();
+
+    void updateUserEmail(Integer userid, String email);
+
+    Boolean checkUserEmail(String email);
+
+    void updateUserPicture(Integer userid, String filename);
+
+    User findUserInfo(User user);
+
+    String findUserPicture(String userid);
 }

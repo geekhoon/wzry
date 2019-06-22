@@ -68,6 +68,16 @@ public interface UserDao {
 
     void changeUserPass(User User);
 
+    void updateUserEmail(User user);
+
+    User checkUserEmail(String email);
+
+    void updateUserPicture(User user);
+
+    User findUserInfo(User user);
+
+    User findUserPicture(User userid);
+
     void updateLoginStatus(Map map);
 
 }

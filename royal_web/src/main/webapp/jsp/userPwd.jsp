@@ -17,8 +17,17 @@
 
     <script>
         $(function () {
-            //校验密码框输入非空后发送ajax请求;
-            //if(checkNewPassword() && checkOldPassword()){
+            //查询用户头像
+            $.ajax({
+                type:"POST",
+                url:"${pageContext.request.contextPath}/user/findUserPicture.do",
+                data:{"userid":${sessionScope.user.userid}},
+                dataType:"text",
+                success:function (data) {
+                    $("#userPic").attr("src","${pageContext.request.contextPath}/"+data);
+                }
+            });
+
 
                 $("#change").click(function () {
                     if(checkOldPassword() && checkNewPassword()){
@@ -28,19 +37,18 @@
                             data:{"userid":${sessionScope.user.userid},"oldPass":$("#oldPassword").val(),"newPass":$("#newPassword").val()},
                             dataType:"text",
                             success:function (data) {
-                                alert(typeof data);
                                 if(data=="error"){
                                     //输入的旧密码错误
-                                    alert("请输入正确的密码");
+                                    $("#changePassword").html("<font color='red'>输入的密码错误</font>");
                                 }else if(data == "success"){
-                                    alert("修改成功");
+                                    alert("请重新登录");
+                                    location.href="${pageContext.request.contextPath}/user/userExist.do";
                                 }
                             }
                         });
                     }
                     }
-                )
-            //}
+                );
 
             //校验密码框输入
             function checkOldPassword() {
@@ -78,6 +86,7 @@
                     }else{
                         //alert("密码格式错误");
                         $("#newPassword").css("border","1px solid red");
+                        $("#changePassword").html("<font color='red'>密码必须是6~10位的英文或数字</font>");
                         return false;
                     }
                 }
@@ -126,7 +135,7 @@
             <div class="user-info-t" style="height:20px;"></div>
             <div class="user-info-l l">
                 <div class="user-info-l-t">
-                    <img src="${pageContext.request.contextPath}/images/default.png" alt=""/>
+                    <img src="" id="userPic"/>
                     <div class="username">${sessionScope.user.username}</div>
                 </div>
                 <ul class="user-info-l-b">

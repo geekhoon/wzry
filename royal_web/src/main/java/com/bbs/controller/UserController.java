@@ -6,16 +6,28 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+<<<<<<< Updated upstream:royal_web/src/main/java/com/bbs/manage/controller/UserController.java
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+=======
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+>>>>>>> Stashed changes:royal_web/src/main/java/com/bbs/controller/UserController.java
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+<<<<<<< Updated upstream:royal_web/src/main/java/com/bbs/manage/controller/UserController.java
 import java.util.List;
+=======
+import java.net.URLEncoder;
+import java.util.UUID;
+>>>>>>> Stashed changes:royal_web/src/main/java/com/bbs/controller/UserController.java
 
 @Controller
 @RequestMapping("/user")
@@ -74,7 +86,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/userExist")
+    @RequestMapping("/userExist.do")
     public void userExist(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = (User)request.getSession().getAttribute("user");
         userService.updateLoginStatus(user.getUserid(),0);
@@ -98,6 +110,64 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/upload.do")
+    public String userInfoChange(Integer userid,String email,MultipartFile upload,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        if(email != null){
+            userService.updateUserEmail(userid,email);
+        }
+
+        String path = request.getSession().getServletContext().getRealPath("/uploads/");
+        File file = new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+
+        String filename = upload.getOriginalFilename();
+        if(filename == null || "".equals(filename)){
+            User user = new User();
+            user.setUserid(userid);
+            User u = userService.findUserInfo(user);
+            request.getSession().setAttribute("user",u);
+            return "userInfo";
+        }
+
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        int i = filename.lastIndexOf(".");
+        filename = filename.substring(i);
+        filename = uuid+filename;
+        upload.transferTo(new File(path,filename));
+        String saveName = "uploads/"+filename;
+        userService.updateUserPicture(userid,saveName);
+
+        User user = new User();
+        user.setUserid(userid);
+        User u = userService.findUserInfo(user);
+        request.getSession().setAttribute("user",u);
+
+        return "userInfo";
+    }
+
+    @RequestMapping("/findUserPicture.do")
+    @ResponseBody
+    public String findUserPicture(String userid){
+        String path = userService.findUserPicture(userid);
+        return path;
+    }
+
+    @RequestMapping("/checkUserEmail.do")
+    @ResponseBody
+    public String checkUserEmail(String email ,HttpServletResponse response){
+        response.setContentType("UTF-8");
+        Boolean b = userService.checkUserEmail(email);
+        if(b){
+            //该邮箱已被注册,不能使用
+            return "error";
+        }else{
+            //该邮箱未被注册,可以使用
+            return "success";
+        }
+    }
+
     @RequestMapping(value = "/findUser.do" ,method = RequestMethod.POST)
     public @ResponseBody User findUser(HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("user");
@@ -113,16 +183,14 @@ public class UserController {
         User user = new User();
         user.setUsername(username);
         user.setUserpass(userpass);
-        if ("".equals(email)){
-            user.setEmail(null);
-        }else{
-            user.setEmail(email);
-        }
+        user.setEmail(email);
+
         Boolean regist = userService.userRegist(user);
+        User userLogin = userService.findUserByuserName(user.getUsername());
 
         if (regist){
             //注册成功
-            request.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("user",userLogin);
             return user;
         }else{
             //注册失败
