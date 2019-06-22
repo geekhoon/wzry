@@ -1,16 +1,16 @@
 package com.bbs.manage.controller;
 
-import com.bbs.domain.Article;
-import com.bbs.domain.Comment;
-import com.bbs.domain.Reply;
-import com.bbs.domain.User;
+import com.bbs.domain.*;
 import com.bbs.service.IArticleService;
 import com.bbs.service.ICommentService;
 import com.bbs.service.IReplyService;
+import com.bbs.service.IZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +33,8 @@ public class ArticleController {
     private ICommentService commentService;
     @Autowired
     private IReplyService replyService;
+    @Autowired
+    private IZoneService zoneService;
 
     /**
      * 发帖
@@ -96,13 +98,25 @@ public class ArticleController {
 
 
 
+    @PostMapping("/searchArticle.do")
+    public String searchArticle(Model model,String searchArticle,@RequestParam(required = false, defaultValue = "1", value = "zoneid") Integer zoneid){
+        List<Article> articleList=articleService.searchArticle(searchArticle.trim(),zoneid);
+        List<Zone> zoneList=zoneService.findZoneList();
+        model.addAttribute("articleList",articleList);
+        model.addAttribute("zoneList",zoneList);
+        model.addAttribute("zoneid",zoneid);
+        return "index";
+    }
+
 
 
     @RequestMapping("/getArticleList")
-    public String getArticleList(Model model){
-        List<Article> list = articleService.getArticleList();
-        model.addAttribute("articleList",list);
-
+    public String getArticleList(Model model,@RequestParam(required = false, defaultValue = "1", value = "zoneid") Integer zoneid){
+        List<Article> articleList = articleService.getArticleList(zoneid);
+        List<Zone> zoneList=zoneService.findZoneList();
+        model.addAttribute("articleList",articleList);
+        model.addAttribute("zoneList",zoneList);
+        model.addAttribute("zoneid",zoneid);
         return "index";
     }
 

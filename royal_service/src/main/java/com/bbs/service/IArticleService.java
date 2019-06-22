@@ -25,7 +25,7 @@ public interface IArticleService {
 
     Article findById(Integer id);
 
-    List<Article> getArticleList();
+    List<Article> getArticleList(Integer zoneid);
 
     Article getArticle(Integer articleid);
 
@@ -36,4 +36,6 @@ public interface IArticleService {
     void updateReportStatus(Integer articleid);
 
     void deleteArticle(Integer id);
+
+    List<Article> searchArticle(String articleName,Integer zoneid);
 }

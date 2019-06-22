@@ -51,9 +51,10 @@
                 </p>
             </div>
             <div class="search-box l">
-                <form action="javascript:;">
-                    <input type="text" class="txt l" placeholder="请输入关键字">
-                    <input type="button" value="搜索" class="btn l"/>
+                <form action="${pageContext.request.contextPath}/article/searchArticle.do" method="post">
+                    <input type="text" class="txt l" placeholder="请输入关键字" name="searchArticle">
+                    <input type="hidden" class="txt l" name="zoneid" value="${zoneid}">
+                    <input type="submit" value="搜索" class="btn l"/>
                 </form>
             </div>
         </div>
@@ -63,18 +64,12 @@
 
         <!-- 导航 -->
         <ul class="hm-bbs-nav border-lrb clearfix">
-            <li class="current">
-                <a href="#"><em></em>综合交流区</a>
-            </li>
-            <li>
-                <a href="#"><em></em>BUG反馈区</a>
-            </li>
-            <li>
-                <a href="#"><em></em>新闻公告区</a>
-            </li>
-            <li>
-                <a href="#"><em></em>活动专区</a>
-            </li>
+            <c:forEach var="zone" items="${zoneList}">
+                <li class=${zoneid==zone.zoneid? 'current':''}>
+                    <a href="${pageContext.request.contextPath}/article/getArticleList.do?zoneid=${zone.zoneid}"><em></em>${zone.zonename}
+                    </a>
+                </li>
+            </c:forEach>
         </ul>
 
 
@@ -82,10 +77,20 @@
 
         <!-- 主体部分 -->
         <div class="hm-bbs-main border-lrb clearfix">
+
             <!-- 左侧列表 -->
             <div class="list-view l">
                 <ul>
+                    <c:if test="${empty articleList}">
 
+                        <c:if test="${not empty user.username && !(user.username eq null) }">
+                            <em style="font-size: xx-large">还没有相关帖子哦,<a href="javascript:$('.ft-box').fadeIn(120);" class="newTopic">来一发</a>吧?</em>
+                        </c:if>
+                        <c:if test="${empty user.username || (user.username eq null) }">
+                            <em style="font-size: xx-large">还没有相关帖子哦,<a href="javascript:alert('请先登录')" class="newTopic">来一发</a>吧?</em>
+                        </c:if>
+
+                    </c:if>
                     <c:forEach items="${articleList}" var="article">
                         <c:if test="${article.istop == 1}">
                              <li class="clearfix ding">
@@ -107,69 +112,6 @@
                         </div>
                     </li>
                     </c:forEach>
-
-<%--
-                    <li class="clearfix ding">
-                        <div class="hm-index-title">
-                            <i class="set-to-top">顶</i> <a href="getArticle.do">求官方出艾琳英雄活动</a>
-                        </div>
-                        <div class="hm-index-con">本人玩得迟，所以看到别人用艾琳的时候，特别羡慕，现贵族6了，很想要一个艾琳，我身边很多朋友也想要，求</div>
-                        <div class="hm-index-info l">
-                            <span class="article-username">晨曦初露</span><span class="post-time">2017-05-24 08:00:05</span>
-                        </div>
-                        <div class="hm-index-fun r">
-                            <span class="icon-like"><i></i>1</span>
-                            <span class="icon-talk"><i></i>0</span>
-                        </div>
-                    </li>
-                    <li class="clearfix ding">
-                        <div class="hm-index-title">
-                            <i class="set-to-top">顶</i> <a href="getArticle.do">求官方出艾琳英雄活动</a>
-                        </div>
-                        <div class="hm-index-con">本人玩得迟，所以看到别人用艾琳的时候，特别羡慕，现贵族6了，很想要一个艾琳，我身边很多朋友也想要，求</div>
-                        <div class="hm-index-info l">
-                            <span class="article-username">晨曦初露</span><span class="post-time">2017-05-24 08:00:05</span>
-                        </div>
-                        <div class="hm-index-fun r">
-                            <span class="icon-like"><i></i>1</span>
-                            <span class="icon-talk"><i></i>0</span>
-                        </div>
-                    </li>
-
-
-
-
-                    <li class="clearfix">
-                        <div class="hm-index-title">
-                            <i class="set-to-top">顶</i> <a href="getArticle.do">排位赛BUG，排不上！</a>
-                        </div>
-                        <div class="hm-index-con">现在黄金2，无论怎么匹配，都匹配不到？有次匹配了10分钟，这是为什么？</div>
-                        <div class="hm-index-info l">
-                            <span class="article-username">不哭不闹不炫耀</span><span class="post-time">2017-05-24 09:10:00</span>
-                        </div>
-                        <div class="hm-index-fun r">
-                            <span class="icon-like"><i></i>3</span>
-                            <span class="icon-talk"><i></i>10</span>
-                        </div>
-                    </li>
-
-
-
-
-                    <li class="clearfix">
-                        <div class="hm-index-title">
-                            <i class="set-to-top">顶</i> <a href="getArticle.do">排位赛BUG，排不上！</a>
-                        </div>
-                        <div class="hm-index-con">现在黄金2，无论怎么匹配，都匹配不到？有次匹配了10分钟，这是为什么？</div>
-                        <div class="hm-index-info l">
-                            <span class="article-username">不哭不闹不炫耀</span><span class="post-time">2017-05-24 09:10:00</span>
-                        </div>
-                        <div class="hm-index-fun r">
-                            <span class="icon-like"><i></i>3</span>
-                            <span class="icon-talk"><i></i>10</span>
-                        </div>
-                    </li>--%>
-
 
                 </ul>
             </div>

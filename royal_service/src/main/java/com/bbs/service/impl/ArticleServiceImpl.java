@@ -89,10 +89,12 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public List<Article> getArticleList() {
+    public List<Article> getArticleList(Integer zoneid) {
 
         ArticleExample example = new ArticleExample();
-       /* ArticleExample.Criteria criteria = example.createCriteria();*/
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andIsreportEqualTo(0);
+        criteria.andZoneidEqualTo(zoneid);
         example.setOrderByClause("istop desc");
         return articleDao.selectByExample(example);
     }
@@ -126,5 +128,17 @@ public class ArticleServiceImpl implements IArticleService {
             article.setIsreport(0);
         }
         articleDao.updateByPrimaryKey(article);
+    }
+
+    @Override
+    public List<Article> searchArticle(String articleName,Integer zoneid) {
+        ArticleExample articleExample = new ArticleExample();
+        ArticleExample.Criteria criteria = articleExample.createCriteria();
+        criteria.andTitleLike("%"+articleName+"%");
+        criteria.andIsreportEqualTo(0);
+        criteria.andZoneidEqualTo(zoneid);
+        articleExample.setOrderByClause("isTop desc");
+        List<Article> articleList = articleDao.selectByExample(articleExample);
+        return articleList;
     }
 }
