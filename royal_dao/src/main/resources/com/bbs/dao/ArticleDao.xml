@@ -130,6 +130,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.bbs.domain.Article" >
+    <selectKey resultType="java.lang.Integer" keyProperty="articleId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into bbs_article_table (articleId, title, sendTime,
     senderName, isTop, replyCount,
     upvoteCount, browseCount, zoneId,

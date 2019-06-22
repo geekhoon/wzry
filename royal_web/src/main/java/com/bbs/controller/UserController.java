@@ -1,4 +1,4 @@
-package com.bbs.manage.controller;
+package com.bbs.controller;
 
 import com.bbs.domain.User;
 import com.bbs.service.UserService;

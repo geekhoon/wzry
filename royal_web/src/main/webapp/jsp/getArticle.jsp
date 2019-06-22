@@ -349,21 +349,71 @@ function showDialog1() {
 }
 </script>
 <script>
+    $(function () {
+        $.ajax({
+            type:'get',
+            async:false,
+            dataType:'json',
+            contentType:'application/json',
+            url:'/upvote/findByUsernameAndArticleid.do',
+            data:{"articleid":${article.articleid}},
+            success:function (result) {
+                if (result){
+                    $("#id1").css("background-position","-112px -32px");
+                }else{
+                    $("#id1").css("background-position","-0px -0px");
+                }
+            }
+        });
+    })
+    
+    
     function getCommentId(id){
         $("#commentid").val(id);
     }
-    var i = 0;
+    /*var i = 0;*/
     function upvote(articleid) {
-        i = i + 1;
+
+
+
+       /* i = i + 1;
         if ( i % 2 == 1){
             $("#id1").css("background-position","-112px -32px");
         }else {
             $("#id1").css("background-position","-0px -0px");
-        }
-        $.post("/article/upvoteChange.do",{"i":i,"articleid":articleid},function(result){
-           /* $("#totalCount").html("全部帖子<strong>"+result+"</strong>")*/
-            $("#upvoteCount").html("<a href='#'><i></i>"+result+"</a>");
+        }*/
+        $.ajax({
+            type:'get',
+            async:false,
+            dataType:'json',
+            contentType:'application/json',
+            url:'/article/upvoteChange.do',
+            data:{"articleid":articleid},
+            success:function (result) {
+                $("#upvoteCount").html("<a href='#'><i></i>"+result+"</a>");
+            }
         });
+
+        $.ajax({
+            type:'get',
+            async:false,
+            dataType:'json',
+            contentType:'application/json',
+            url:'/upvote/findByUsernameAndArticleid.do',
+            data:{"articleid":articleid},
+            success:function (result) {
+                if (result){
+                    $("#id1").css("background-position","-112px -32px");
+                }else{
+                    $("#id1").css("background-position","-0px -0px");
+                }
+            }
+        });
+
+        /*$.post("/upvote/add.do",{"articleid":articleid},function(result){
+
+        });*/
+
     }
     function reply(articleid) {
         $.post("/article/replyChange.do",{"articleid":articleid},function(result){
