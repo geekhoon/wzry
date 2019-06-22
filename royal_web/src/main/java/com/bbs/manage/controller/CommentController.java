@@ -1,4 +1,4 @@
-package com.bbs.controller;
+package com.bbs.manage.controller;
 
 import com.bbs.domain.Comment;
 import com.bbs.domain.User;
@@ -41,7 +41,7 @@ public class CommentController {
            commentService.addComment(comment);
            List<Comment> list = commentService.findCommentList(comment.getArticleid());
            request.getSession().setAttribute("commentList",list);
-           response.sendRedirect(request.getContextPath()+"/jsp/getArticle.jsp");
+           response.sendRedirect(request.getContextPath()+"/article/getArticle.do?articleid="+comment.getArticleid());
        }catch (Exception e){
        }
     }

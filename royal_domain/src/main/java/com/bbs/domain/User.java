@@ -92,4 +92,19 @@ public class User {
     public void setTalkstatus(Integer talkstatus) {
         this.talkstatus = talkstatus;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", username='" + username + '\'' +
+                ", userpass='" + userpass + '\'' +
+                ", email='" + email + '\'' +
+                ", picurl='" + picurl + '\'' +
+                ", role=" + role +
+                ", lastlogintime=" + lastlogintime +
+                ", loginstatus=" + loginstatus +
+                ", talkstatus=" + talkstatus +
+                '}';
+    }
 }

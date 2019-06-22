@@ -35,10 +35,10 @@
                     <h2 class="l">${article.title}</h2>
                     <div class="hm-detail-fun l">
 					     <span class="icon-like" id="upvoteCount">
-                            <a href='#'><i></i>${upvoteCount}</a>
+                            <a href='#'><i></i>${article.upvotecount}</a>
 					     </span>
                         <span class="icon-talk" id="replyCount">
-						     <a href='#'><i></i>${replyCount}</a>
+						     <a href='#'><i></i>${article.replycount}</a>
 						</span>
                     </div>
                 </div>
@@ -283,6 +283,7 @@
             </div>
             <div class="win_bd">
                 <div class="win_bd_b">
+                    <input type="hidden" value="${article.articleid}" name="articleid">
                     <input type="hidden" value="" name="commentid" id="commentid">
                     <textarea id="replyContent" name="replycontent" required="required" placeholder="回复内容限于40字以内"></textarea>
                 </div>

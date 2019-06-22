@@ -12,9 +12,18 @@
         <div class="hm-inner-l l"></div>
         <div class="hm-inner-r r">
             <div class="box">
+                <c:if test="${not empty user.username && !(user.username eq null) }">
+
+                欢迎,<a href='${pageContext.request.contextPath}/user/findUserInfo.do'>${user.username}</a>
+                    <a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist'>注销</a>
+                </c:if>
+                <c:if test="${empty user.username || (user.username eq null) }">
                 <a href="javascript:;" id="login" class="to-login">游客登录</a>
 
                 <a href="${pageContext.request.contextPath}/user/findRegister.do" id="regist">新用户注册</a>
+                </c:if>
+
+
                 <div id="dialogBg"></div>
                 <div id="dialog" class="animated">
                     <img class="dialogIco" width="50" height="40" src="${pageContext.request.contextPath}/images/ico.png"/>
@@ -102,14 +111,6 @@
           }
       });
 
-        //查询已登录的用户信息
-      $.post("${pageContext.request.contextPath}/user/findUser.do",{},function(data){
-          if(data!=null){
-              $("#login").html("欢迎,<a href='${pageContext.request.contextPath}/user/findUserInfo.do'>"+data.username+"</a>");
-              $("#regist").html("<a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist'>注销</a>");
-
-          }
-      },"json");
 
       //调用方法校验用户名及密码
       $("#userName").blur(checkUserName);

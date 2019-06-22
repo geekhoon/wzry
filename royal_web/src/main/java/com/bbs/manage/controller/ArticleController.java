@@ -1,4 +1,4 @@
-package com.bbs.controller;
+package com.bbs.manage.controller;
 
 import com.bbs.domain.Article;
 import com.bbs.domain.Comment;
@@ -54,14 +54,7 @@ public class ArticleController {
         article.setBrowsecount(0);
         article.setZoneid(1);
         Integer articleid =  articleService.addArticle(article);
-        Integer upvoteCount = articleService.findUpvoteCount(articleid);
-        Integer replyCount = articleService.findReplyCount(articleid);
-        article.setArticleid(articleid);
-        article.setUpvotecount(upvoteCount);
-        request.getSession().setAttribute("article",article);
-        request.getSession().setAttribute("upvoteCount",upvoteCount);
-        request.getSession().setAttribute("replyCount",replyCount);
-        response.sendRedirect(request.getContextPath()+"/jsp/getArticle.jsp");
+        response.sendRedirect(request.getContextPath()+"/article/getArticle.do?articleid="+articleid);
     }
 
     @RequestMapping("/getTotalCount")
@@ -87,7 +80,7 @@ public class ArticleController {
             articleService.upvoteChange(-1,articleid);
         }
         Integer upvoteCount = articleService.findUpvoteCount(articleid);
-        request.getSession().setAttribute("upvoteCount",upvoteCount);
+
         return upvoteCount;
 
     }
@@ -97,7 +90,6 @@ public class ArticleController {
 
         articleService.replyChange(articleid);
         Integer replyCount = articleService.findReplyCount(articleid);
-        request.getSession().setAttribute("replyCount",replyCount);
         return replyCount;
 
     }
@@ -115,13 +107,9 @@ public class ArticleController {
     }
 
     @RequestMapping("/getArticle")
-    public void getArticle(Integer articleid,HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String getArticle(Integer articleid,HttpServletRequest request, HttpServletResponse response) throws IOException {
         Article article = articleService.getArticle(articleid);
         request.getSession().setAttribute("article",article);
-        Integer upvoteCount = articleService.findUpvoteCount(articleid);
-        request.getSession().setAttribute("upvoteCount",upvoteCount);
-        Integer replyCount = articleService.findReplyCount(articleid);
-        request.getSession().setAttribute("replyCount",replyCount);
         List<Comment> list = commentService.findCommentList(articleid);
         request.getSession().setAttribute("commentList",list);
         HashMap map = new HashMap();
@@ -135,7 +123,7 @@ public class ArticleController {
 
         request.getSession().setAttribute("replyMap",map);
 
-        response.sendRedirect(request.getContextPath()+"/jsp/getArticle.jsp");
+        return "getArticle";
     }
 
 }

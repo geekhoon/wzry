@@ -1,4 +1,4 @@
-package com.bbs.controller;
+package com.bbs.manage.controller;
 
 import com.bbs.common.CommonCode;
 import com.bbs.common.ResponseResult;
@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/manage_user")
 public class UserController {
 
     @Autowired
@@ -84,19 +84,6 @@ public class UserController {
         }
 //        return "forward:/user/findByPage.do?pn="+pageNum+"&username="+user.getUsername()+"&role="+user.getRole();
 
-    }
-
-    /**
-     * 根据用户id查询信息
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @GetMapping("/findById.do")
-    public User findById(Integer id) {
-        User user = userService.findById(id);
-        return user;
     }
 
 }

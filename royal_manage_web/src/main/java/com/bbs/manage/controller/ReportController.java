@@ -1,4 +1,4 @@
-package com.bbs.controller;
+package com.bbs.manage.controller;
 
 import com.bbs.domain.Report;
 import com.bbs.service.IArticleService;

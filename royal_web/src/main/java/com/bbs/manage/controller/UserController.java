@@ -1,4 +1,4 @@
-package com.bbs.controller;
+package com.bbs.manage.controller;
 
 import com.bbs.domain.User;
 import com.bbs.service.UserService;
@@ -62,8 +62,9 @@ public class UserController {
             return "false";
         }else{
             //登录成功
-            request.getSession().setAttribute("username",u.getUsername());
+            //request.getSession().setAttribute("username",u.getUsername());
             request.getSession().setAttribute("user",u);
+            System.out.println(u);
             return "true";
         }
     }
@@ -71,7 +72,7 @@ public class UserController {
     @RequestMapping("/userExist")
     public void userExist(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().removeAttribute("user");
-        request.getSession().removeAttribute("username");
+       // request.getSession().removeAttribute("username");
         response.sendRedirect(request.getContextPath()+"/index.jsp");
     }
 

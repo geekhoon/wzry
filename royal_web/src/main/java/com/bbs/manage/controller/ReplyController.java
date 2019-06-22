@@ -1,4 +1,4 @@
-package com.bbs.controller;
+package com.bbs.manage.controller;
 
 import com.bbs.domain.Reply;
 import com.bbs.domain.User;
@@ -6,7 +6,6 @@ import com.bbs.service.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +31,7 @@ public class ReplyController {
      * @return
      */
     @RequestMapping("/add")
-    @ResponseBody
-    public void addReply(HttpServletRequest request, HttpServletResponse response,Reply reply) throws IOException {
+    public void addReply(HttpServletRequest request, HttpServletResponse response,Reply reply,Integer articleid) throws IOException {
         User user = (User)request.getSession().getAttribute("user");
         reply.setReplyusername(user.getUsername());
         replyService.addReply(reply);
@@ -41,7 +39,7 @@ public class ReplyController {
         map.put(reply.getCommentid(),list);
 
         request.getSession().setAttribute("replyMap",map);
-        response.sendRedirect(request.getContextPath()+"/jsp/getArticle.jsp");
+        response.sendRedirect(request.getContextPath()+"/article/getArticle.do?articleid="+articleid);
 
 
 

@@ -1,4 +1,4 @@
-package com.bbs.controller;
+package com.bbs.manage.controller;
 
 import com.bbs.common.CommonCode;
 import com.bbs.common.ResponseResult;
@@ -45,7 +45,7 @@ public class ReportController {
               if (article.getSendername().equals(user.getUsername())){
                   return new ResponseResult(CommonCode.USERNAMEREPEAT);
               }
-              articleService.updateReportStatus(report.getArticleid());
+
 
 
               report.setReporttime(new Date());
