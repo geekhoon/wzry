@@ -288,4 +288,8 @@
   <update id="changeUserPass" parameterType="com.bbs.domain.User" >
 update bbs_user_table set userPass = #{userpass} where userId = #{userid}
   </update>
+
+  <update id="updateLoginStatus" parameterType="map">
+    update bbs_user_table set loginStatus = #{loginstatus} where userId = #{userid}
+  </update>
 </mapper>

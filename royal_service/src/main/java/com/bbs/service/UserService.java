@@ -44,4 +44,8 @@ public interface UserService {
     void changeUserPass(String userid, String newPass);
 
     User checkUserPass(String userid, String oldPass);
+
+    void updateLoginStatus(Integer userid, Integer loginstatus);
+
+    List getOnlineUser();
 }

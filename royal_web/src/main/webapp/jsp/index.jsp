@@ -20,6 +20,9 @@
         $.post("/article/getTodayCount.do",{},function(result){
             $("#todayCount").html("今日帖子<strong>"+result+"</strong>")
         });
+        $.post("/user/getOnlineCount.do",{},function(result){
+            $("#onlineCount").html("<a href='javascript:;'>在线用户("+result+")</a>");
+        });
 
     })
 </script>
@@ -123,17 +126,18 @@
             <div class="aside l">
                 <div class="aside-box">
                     <h3 class="t">
-                        <a href="javascript:;">在线用户(2)</a>
+                        <span id="onlineCount">
+                            <a href='javascript:;'>在线用户(0)</a>
+                        </span>
                     </h3>
                     <ul class="b clearfix">
+                        <c:forEach items="${onLineUser}" var="user">
                         <li>
-                            <div><img src="${pageContext.request.contextPath}/images/default.png" height="55"/> </div>
-                            <p>Mr.King</p>
+                            <div><img src="${user.picurl}" height="55"/> </div>
+                            <p>${user.username}</p>
                         </li>
-                        <li>
-                            <div><img src="${pageContext.request.contextPath}/images/default.png" height="55"/></div>
-                            <p>疯子</p>
-                        </li>
+                        </c:forEach>
+
                     </ul>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import com.bbs.service.IArticleService;
 import com.bbs.service.ICommentService;
 import com.bbs.service.IReplyService;
 import com.bbs.service.IZoneService;
+import com.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,9 @@ public class ArticleController {
     private IReplyService replyService;
     @Autowired
     private IZoneService zoneService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 发帖
@@ -111,10 +115,13 @@ public class ArticleController {
 
 
     @RequestMapping("/getArticleList")
-    public String getArticleList(Model model,@RequestParam(required = false, defaultValue = "1", value = "zoneid") Integer zoneid){
-        List<Article> articleList = articleService.getArticleList(zoneid);
+    public String getArticleList(Model model,HttpServletRequest request,@RequestParam(required = false, defaultValue = "1", value = "zoneid") Integer zoneid){
+        List<Article> list = articleService.getArticleList(zoneid);
+        request.getSession().setAttribute("articleList",list);
+
+        List onlineUser = userService.getOnlineUser();
+        request.getSession().setAttribute("onLineUser",onlineUser);
         List<Zone> zoneList=zoneService.findZoneList();
-        model.addAttribute("articleList",articleList);
         model.addAttribute("zoneList",zoneList);
         model.addAttribute("zoneid",zoneid);
         return "index";

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService {
@@ -114,5 +116,21 @@ public class UserServiceImpl implements UserService {
             //旧密码错误,查不到用户
             return user;
         }
+    }
+
+    @Override
+    public void updateLoginStatus(Integer userid, Integer loginstatus) {
+        Map map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("loginstatus",loginstatus);
+        userDao.updateLoginStatus(map);
+    }
+
+    @Override
+    public List getOnlineUser() {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andLoginstatusEqualTo(1);
+        return userDao.selectByExample(example);
     }
 }

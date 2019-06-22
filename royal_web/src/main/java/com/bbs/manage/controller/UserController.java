@@ -6,12 +6,16 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -57,6 +61,7 @@ public class UserController {
         user.setUsername(username);
         user.setUserpass(userpass);
         User u = userService.login(user);
+        userService.updateLoginStatus(u.getUserid(), 1);
         if(u == null){
             //登录失败
             return "false";
@@ -71,7 +76,10 @@ public class UserController {
 
     @RequestMapping("/userExist")
     public void userExist(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        userService.updateLoginStatus(user.getUserid(),0);
         request.getSession().removeAttribute("user");
+
        // request.getSession().removeAttribute("username");
         response.sendRedirect(request.getContextPath()+"/index.jsp");
     }
@@ -120,5 +128,13 @@ public class UserController {
             //注册失败
             return null;
         }
+    }
+
+    @RequestMapping("/getOnlineCount")
+    @ResponseBody
+    public Integer getOnlineCount(HttpServletRequest request, HttpServletResponse response){
+        List<User> list =  userService.getOnlineUser();
+
+        return list.size();
     }
 }
