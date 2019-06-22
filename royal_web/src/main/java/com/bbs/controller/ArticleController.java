@@ -1,11 +1,8 @@
-package com.bbs.manage.controller;
+package com.bbs.controller;
 
 import com.bbs.domain.*;
-import com.bbs.service.IArticleService;
-import com.bbs.service.ICommentService;
-import com.bbs.service.IReplyService;
-import com.bbs.service.IZoneService;
-import com.bbs.service.UserService;
+import com.bbs.service.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +37,9 @@ public class ArticleController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private IUpvoteService upvoteService;
+
     /**
      * 发帖
      * @param article
@@ -58,7 +58,8 @@ public class ArticleController {
         article.setReplycount(0);
         article.setUpvotecount(0);
         article.setBrowsecount(0);
-        article.setZoneid(1);
+        article.setIsreport(0);
+        article.setZoneid(article.getZoneid());
         Integer articleid =  articleService.addArticle(article);
         response.sendRedirect(request.getContextPath()+"/article/getArticle.do?articleid="+articleid);
     }
@@ -79,12 +80,26 @@ public class ArticleController {
 
     @RequestMapping("/upvoteChange")
     @ResponseBody
-    public Integer upvoteChange(Integer i,Integer articleid,HttpServletRequest request) throws IOException {
-        if (i % 2 == 1){
+    public Integer upvoteChange(@Param(value = "articleid") Integer articleid, HttpServletRequest request) throws IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        Upvote upvote = new Upvote();
+        upvote.setUpvotearticleid(articleid);
+        upvote.setUpvoteusername(user.getUsername());
+        List<Upvote> list = upvoteService.findByUsernameAndArticleid(upvote);
+        if(list.size() == 0){
+            upvote.setIsupvote(1);
+            upvoteService.addUpvote(upvote);
             articleService.upvoteChange(1,articleid);
-        }else {
+        }else if (list.get(0).getIsupvote() == 1){
+            upvote.setIsupvote(0);
+            upvoteService.updateStatus(upvote);
             articleService.upvoteChange(-1,articleid);
+        }else if (list.get(0).getIsupvote() == 0){
+            upvote.setIsupvote(1);
+            upvoteService.updateStatus(upvote);
+            articleService.upvoteChange(1,articleid);
         }
+
         Integer upvoteCount = articleService.findUpvoteCount(articleid);
 
         return upvoteCount;

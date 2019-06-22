@@ -175,6 +175,7 @@
             </div>
             <div class="win_bd">
                 <div class="win_bd_t">
+                    <input type="hidden"  name="zoneid" value="${zoneid}"/>
                     <input type="text" id="title" name="title" placeholder="帖子标题"/>
                 </div>
                 <div class="win_bd_b">
