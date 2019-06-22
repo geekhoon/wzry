@@ -3,6 +3,7 @@ package com.bbs.dao;
 import com.bbs.domain.Report;
 import com.bbs.domain.ReportExample;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -28,4 +29,7 @@ public interface ReportDao {
     int updateByPrimaryKeySelective(Report record);
 
     int updateByPrimaryKey(Report record);
+
+    @Update("update bbs_report_table set reportStatus=1 where articleId=#{aid}")
+    void changeStatus(Integer aid);
 }

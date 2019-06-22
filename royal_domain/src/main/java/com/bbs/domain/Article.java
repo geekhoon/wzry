@@ -26,6 +26,8 @@ public class Article {
 
     private Integer browsecount;
 
+    private Integer isreport;
+
     private Integer zoneid;
 
     private String content;
@@ -112,6 +114,14 @@ public class Article {
 
     public void setZoneid(Integer zoneid) {
         this.zoneid = zoneid;
+    }
+
+    public Integer getIsreport() {
+        return isreport;
+    }
+
+    public void setIsreport(Integer isreport) {
+        this.isreport = isreport;
     }
 
     public String getContent() {

@@ -73,6 +73,20 @@ public class ArticleController {
         }
     }
 
+    @GetMapping("/deleteArticle.do")
+    public String deleteArticle(@RequestParam("id") Integer id, @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pageNum, Article article) {
+        articleService.deleteArticle(id);
+        String title="";
+        if (article.getTitle()!=null){
+            title=article.getTitle();
+        }
+        if (article.getSendername()!=null){
+            return "redirect:/article/findByPage.do?title="+title+"&pn="+pageNum+"&role="+article.getSendername();
+        }else{
+            return "redirect:/article/findByPage.do?title="+title+"&pn="+pageNum+"&role=";
+        }
+    }
+
     /**
      * 根据用户id查询信息
      * @param id

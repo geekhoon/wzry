@@ -34,4 +34,6 @@ public interface IArticleService {
     Integer findReplyCount(Integer articleid);
 
     void updateReportStatus(Integer articleid);
+
+    void deleteArticle(Integer id);
 }

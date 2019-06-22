@@ -117,10 +117,21 @@
                                     ${article.browsecount}
                                 </td>
                                 <td width="15%">
-                                    ${article.zoneid}
+                                    <c:if test="${article.zoneid==1}">
+                                        综合交流区
+                                    </c:if>
+                                    <c:if test="${article.zoneid==2}">
+                                        BUG反馈区
+                                    </c:if>
+                                    <c:if test="${article.zoneid==3}">
+                                        新闻公告区
+                                    </c:if>
+                                    <c:if test="${article.zoneid==4}">
+                                        活动专区
+                                    </c:if>
                                 </td>
                                 <td width="15%">
-                                    <a href="#" role="button" class="btn btn-primary" data-toggle="modal" value="${article.articleid}" data-target=".article-update-modal">审核</a>
+                                    <a href="/article/deleteArticle.do?id=${article.articleid}&pn=${articleMsgs.pageNum}&title=${articleSearch.title}&sendername=${articleSearch.sendername}" role="button" class="btn btn-primary">屏蔽</a>
                                     <c:if test="${article.istop==0}">
                                         <a href="/article/changeStatus.do?id=${article.articleid}&pn=${articleMsgs.pageNum}&title=${articleSearch.title}&sendername=${articleSearch.sendername}" role="button" class="btn btn-danger" >置顶</a>
                                     </c:if>

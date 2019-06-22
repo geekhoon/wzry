@@ -187,8 +187,6 @@
 
 </div><!-- /.hrms_dept_container -->
 
-<%@ include file="UserAdd.jsp"%>
-<%@ include file="UserUpdate.jsp"%>
 </body>
 <script>
     function searchUser(pn) {

@@ -664,6 +664,66 @@ public class ArticleExample {
             addCriterion("zoneId not between", value1, value2, "zoneid");
             return (Criteria) this;
         }
+
+        public Criteria andIsreportIsNull() {
+            addCriterion("isReport is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportIsNotNull() {
+            addCriterion("isReport is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportEqualTo(Integer value) {
+            addCriterion("isReport =", value, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportNotEqualTo(Integer value) {
+            addCriterion("isReport <>", value, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportGreaterThan(Integer value) {
+            addCriterion("isReport >", value, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isReport >=", value, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportLessThan(Integer value) {
+            addCriterion("isReport <", value, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportLessThanOrEqualTo(Integer value) {
+            addCriterion("isReport <=", value, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportIn(List<Integer> values) {
+            addCriterion("isReport in", values, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportNotIn(List<Integer> values) {
+            addCriterion("isReport not in", values, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportBetween(Integer value1, Integer value2) {
+            addCriterion("isReport between", value1, value2, "isreport");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsreportNotBetween(Integer value1, Integer value2) {
+            addCriterion("isReport not between", value1, value2, "isreport");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

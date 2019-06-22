@@ -11,6 +11,7 @@
     <result column="upvoteCount" property="upvotecount" jdbcType="INTEGER" />
     <result column="browseCount" property="browsecount" jdbcType="INTEGER" />
     <result column="zoneId" property="zoneid" jdbcType="INTEGER" />
+    <result column="isReport" property="isreport" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.bbs.domain.Article" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    articleId, title, sendTime, senderName, isTop, replyCount, upvoteCount, browseCount, 
-    zoneId
+    articleId, title, sendTime, senderName, isTop, replyCount, upvoteCount, browseCount,
+    zoneId, isReport
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -111,7 +112,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -129,17 +130,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.bbs.domain.Article" >
-    <selectKey keyProperty="articleid" resultType="Integer" order="AFTER">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into bbs_article_table (articleId, title, sendTime, 
-      senderName, isTop, replyCount, 
-      upvoteCount, browseCount, zoneId, 
-      content)
-    values (#{articleid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}, 
-      #{sendername,jdbcType=VARCHAR}, #{istop,jdbcType=INTEGER}, #{replycount,jdbcType=INTEGER}, 
-      #{upvotecount,jdbcType=INTEGER}, #{browsecount,jdbcType=INTEGER}, #{zoneid,jdbcType=INTEGER}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into bbs_article_table (articleId, title, sendTime,
+    senderName, isTop, replyCount,
+    upvoteCount, browseCount, zoneId,
+    isReport, content)
+    values (#{articleid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP},
+    #{sendername,jdbcType=VARCHAR}, #{istop,jdbcType=INTEGER}, #{replycount,jdbcType=INTEGER},
+    #{upvotecount,jdbcType=INTEGER}, #{browsecount,jdbcType=INTEGER}, #{zoneid,jdbcType=INTEGER},
+    #{isreport,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bbs.domain.Article" >
     insert into bbs_article_table
@@ -170,6 +168,9 @@
       </if>
       <if test="zoneid != null" >
         zoneId,
+      </if>
+      <if test="isreport != null" >
+        isReport,
       </if>
       <if test="content != null" >
         content,
@@ -202,6 +203,9 @@
       </if>
       <if test="zoneid != null" >
         #{zoneid,jdbcType=INTEGER},
+      </if>
+      <if test="isreport != null" >
+        #{isreport,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -244,6 +248,9 @@
       <if test="record.zoneid != null" >
         zoneId = #{record.zoneid,jdbcType=INTEGER},
       </if>
+      <if test="record.isreport != null" >
+        isReport = #{record.isreport,jdbcType=INTEGER},
+      </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -255,15 +262,16 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update bbs_article_table
     set articleId = #{record.articleid,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
-      senderName = #{record.sendername,jdbcType=VARCHAR},
-      isTop = #{record.istop,jdbcType=INTEGER},
-      replyCount = #{record.replycount,jdbcType=INTEGER},
-      upvoteCount = #{record.upvotecount,jdbcType=INTEGER},
-      browseCount = #{record.browsecount,jdbcType=INTEGER},
-      zoneId = #{record.zoneid,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+    title = #{record.title,jdbcType=VARCHAR},
+    sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+    senderName = #{record.sendername,jdbcType=VARCHAR},
+    isTop = #{record.istop,jdbcType=INTEGER},
+    replyCount = #{record.replycount,jdbcType=INTEGER},
+    upvoteCount = #{record.upvotecount,jdbcType=INTEGER},
+    browseCount = #{record.browsecount,jdbcType=INTEGER},
+    zoneId = #{record.zoneid,jdbcType=INTEGER},
+    isReport = #{record.isreport,jdbcType=INTEGER},
+    content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -271,14 +279,15 @@
   <update id="updateByExample" parameterType="map" >
     update bbs_article_table
     set articleId = #{record.articleid,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
-      senderName = #{record.sendername,jdbcType=VARCHAR},
-      isTop = #{record.istop,jdbcType=INTEGER},
-      replyCount = #{record.replycount,jdbcType=INTEGER},
-      upvoteCount = #{record.upvotecount,jdbcType=INTEGER},
-      browseCount = #{record.browsecount,jdbcType=INTEGER},
-      zoneId = #{record.zoneid,jdbcType=INTEGER}
+    title = #{record.title,jdbcType=VARCHAR},
+    sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+    senderName = #{record.sendername,jdbcType=VARCHAR},
+    isTop = #{record.istop,jdbcType=INTEGER},
+    replyCount = #{record.replycount,jdbcType=INTEGER},
+    upvoteCount = #{record.upvotecount,jdbcType=INTEGER},
+    browseCount = #{record.browsecount,jdbcType=INTEGER},
+    zoneId = #{record.zoneid,jdbcType=INTEGER},
+    isReport = #{record.isreport,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -310,6 +319,9 @@
       <if test="zoneid != null" >
         zoneId = #{zoneid,jdbcType=INTEGER},
       </if>
+      <if test="isreport != null" >
+        isReport = #{isreport,jdbcType=INTEGER},
+      </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -319,14 +331,15 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bbs.domain.Article" >
     update bbs_article_table
     set title = #{title,jdbcType=VARCHAR},
-      sendTime = #{sendtime,jdbcType=TIMESTAMP},
-      senderName = #{sendername,jdbcType=VARCHAR},
-      isTop = #{istop,jdbcType=INTEGER},
-      replyCount = #{replycount,jdbcType=INTEGER},
-      upvoteCount = #{upvotecount,jdbcType=INTEGER},
-      browseCount = #{browsecount,jdbcType=INTEGER},
-      zoneId = #{zoneid,jdbcType=INTEGER},
-      content = #{content,jdbcType=LONGVARCHAR}
+    sendTime = #{sendtime,jdbcType=TIMESTAMP},
+    senderName = #{sendername,jdbcType=VARCHAR},
+    isTop = #{istop,jdbcType=INTEGER},
+    replyCount = #{replycount,jdbcType=INTEGER},
+    upvoteCount = #{upvotecount,jdbcType=INTEGER},
+    browseCount = #{browsecount,jdbcType=INTEGER},
+    zoneId = #{zoneid,jdbcType=INTEGER},
+    isReport = #{isreport,jdbcType=INTEGER},
+    content = #{content,jdbcType=LONGVARCHAR}
     where articleId = #{articleid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bbs.domain.Article" >
@@ -338,7 +351,8 @@
       replyCount = #{replycount,jdbcType=INTEGER},
       upvoteCount = #{upvotecount,jdbcType=INTEGER},
       browseCount = #{browsecount,jdbcType=INTEGER},
-      zoneId = #{zoneid,jdbcType=INTEGER}
+      zoneId = #{zoneid,jdbcType=INTEGER},
+      isReport = #{isreport,jdbcType=INTEGER}
     where articleId = #{articleid,jdbcType=INTEGER}
   </update>
   <select id="getTotalCount" resultType="Integer">

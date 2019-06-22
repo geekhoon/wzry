@@ -66,6 +66,7 @@ public class ArticleServiceImpl implements IArticleService {
             criteria.andTitleLike("%"+article.getTitle().trim()+"%");
         if (StringUtil.isNotEmpty(article.getSendername()))
             criteria.andSendernameLike("%"+article.getSendername().trim()+"%");
+        criteria.andIsreportEqualTo(0);
         articleExample.setOrderByClause("isTop desc,sendTime desc,upvoteCount desc,browseCount desc");
         List<Article> articleList = articleDao.selectByExampleWithBLOBs(articleExample);
         return articleList;
@@ -114,5 +115,16 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public void updateReportStatus(Integer articleid) {
         articleDao.updateReportStatus(articleid);
+    }
+
+    @Override
+    public void deleteArticle(Integer id) {
+        Article article = articleDao.selectByPrimaryKey(id);
+        if (article.getIsreport()==0){
+            article.setIsreport(1);
+        }else{
+            article.setIsreport(0);
+        }
+        articleDao.updateByPrimaryKey(article);
     }
 }

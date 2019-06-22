@@ -14,7 +14,7 @@ public interface ArticleDao {
 
     int deleteByPrimaryKey(Integer articleid);
 
-    Integer insert(Article record);
+    int insert(Article record);
 
     int insertSelective(Article record);
 
