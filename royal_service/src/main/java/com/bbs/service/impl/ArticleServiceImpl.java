@@ -1,8 +1,10 @@
 package com.bbs.service.impl;
 
 import com.bbs.dao.ArticleDao;
+import com.bbs.dao.WordDao;
 import com.bbs.domain.Article;
 import com.bbs.domain.ArticleExample;
+import com.bbs.domain.Word;
 import com.bbs.service.IArticleService;
 import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Autowired
     private ArticleDao articleDao;
+
+    @Autowired
+    private WordDao wordDao;
+
     /**
      * 发帖
      * @param article
@@ -96,12 +102,22 @@ public class ArticleServiceImpl implements IArticleService {
         criteria.andIsreportEqualTo(0);
         criteria.andZoneidEqualTo(zoneid);
         example.setOrderByClause("istop desc");
-        return articleDao.selectByExample(example);
+        List<Article> articleList = articleDao.selectByExample(example);
+        replaceWord(articleList);
+        return articleList;
     }
 
     @Override
     public Article getArticle(Integer articleid) {
-        return articleDao.selectByPrimaryKey(articleid);
+        Article article = articleDao.selectByPrimaryKey(articleid);
+        List<Word> wordList = wordDao.selectByExample(null);
+        for (Word word : wordList) {
+            String title = article.getTitle().replaceAll(word.getWord(), "***");
+            String content = article.getContent().replaceAll(word.getWord(), "***");
+            article.setTitle(title);
+            article.setContent(content);
+        }
+        return article;
     }
 
     @Override
@@ -139,6 +155,17 @@ public class ArticleServiceImpl implements IArticleService {
         criteria.andZoneidEqualTo(zoneid);
         articleExample.setOrderByClause("isTop desc");
         List<Article> articleList = articleDao.selectByExample(articleExample);
+        replaceWord(articleList);
         return articleList;
+    }
+
+    private void replaceWord(List<Article> articleList) {
+        List<Word> wordList = wordDao.selectByExample(null);
+        for (Article article : articleList) {
+            for (Word word : wordList) {
+                String title = article.getTitle().replaceAll(word.getWord(), "***");
+                article.setTitle(title);
+            }
+        }
     }
 }

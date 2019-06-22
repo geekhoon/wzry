@@ -1,7 +1,9 @@
 package com.bbs.service.impl;
 
 import com.bbs.dao.CommentDao;
+import com.bbs.dao.WordDao;
 import com.bbs.domain.Comment;
+import com.bbs.domain.Word;
 import com.bbs.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ import java.util.List;
 @Service
 @Transactional
 public class CommentServiceImpl implements ICommentService {
+
+    @Autowired
+    private WordDao wordDao;
 
     @Autowired
     private CommentDao commentDao;
@@ -35,6 +40,15 @@ public class CommentServiceImpl implements ICommentService {
      */
     @Override
     public List findCommentList(Integer articleid) {
-        return commentDao.findAll(articleid);
+        List<Comment> commentList = commentDao.findAll(articleid);
+        List<Word> wordList = wordDao.selectByExample(null);
+        for (Comment comment : commentList) {
+            for (Word word : wordList) {
+                String commentContent = comment.getCommentcontent().replaceAll(word.getWord(), "***");
+                comment.setCommentcontent(commentContent);
+            }
+        }
+
+        return commentList;
     }
 }

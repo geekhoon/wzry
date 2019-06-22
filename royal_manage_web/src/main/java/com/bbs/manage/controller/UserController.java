@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/manage_user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
