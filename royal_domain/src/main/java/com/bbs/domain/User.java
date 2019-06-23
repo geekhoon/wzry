@@ -21,6 +21,10 @@ public class User {
 
     private Integer talkstatus;
 
+    private Integer isupdating;
+
+    private Integer updatestatus;
+
     public Integer getUserid() {
         return userid;
     }
@@ -93,18 +97,19 @@ public class User {
         this.talkstatus = talkstatus;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userid=" + userid +
-                ", username='" + username + '\'' +
-                ", userpass='" + userpass + '\'' +
-                ", email='" + email + '\'' +
-                ", picurl='" + picurl + '\'' +
-                ", role=" + role +
-                ", lastlogintime=" + lastlogintime +
-                ", loginstatus=" + loginstatus +
-                ", talkstatus=" + talkstatus +
-                '}';
+    public Integer getIsupdating() {
+        return isupdating;
+    }
+
+    public void setIsupdating(Integer isupdating) {
+        this.isupdating = isupdating;
+    }
+
+    public Integer getUpdatestatus() {
+        return updatestatus;
+    }
+
+    public void setUpdatestatus(Integer updatestatus) {
+        this.updatestatus = updatestatus;
     }
 }

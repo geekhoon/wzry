@@ -684,6 +684,126 @@ public class UserExample {
             addCriterion("talkStatus not between", value1, value2, "talkstatus");
             return (Criteria) this;
         }
+
+        public Criteria andIsupdatingIsNull() {
+            addCriterion("isupdating is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingIsNotNull() {
+            addCriterion("isupdating is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingEqualTo(Integer value) {
+            addCriterion("isupdating =", value, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingNotEqualTo(Integer value) {
+            addCriterion("isupdating <>", value, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingGreaterThan(Integer value) {
+            addCriterion("isupdating >", value, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isupdating >=", value, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingLessThan(Integer value) {
+            addCriterion("isupdating <", value, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingLessThanOrEqualTo(Integer value) {
+            addCriterion("isupdating <=", value, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingIn(List<Integer> values) {
+            addCriterion("isupdating in", values, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingNotIn(List<Integer> values) {
+            addCriterion("isupdating not in", values, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingBetween(Integer value1, Integer value2) {
+            addCriterion("isupdating between", value1, value2, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsupdatingNotBetween(Integer value1, Integer value2) {
+            addCriterion("isupdating not between", value1, value2, "isupdating");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusIsNull() {
+            addCriterion("updateStatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusIsNotNull() {
+            addCriterion("updateStatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusEqualTo(Integer value) {
+            addCriterion("updateStatus =", value, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusNotEqualTo(Integer value) {
+            addCriterion("updateStatus <>", value, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusGreaterThan(Integer value) {
+            addCriterion("updateStatus >", value, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("updateStatus >=", value, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusLessThan(Integer value) {
+            addCriterion("updateStatus <", value, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusLessThanOrEqualTo(Integer value) {
+            addCriterion("updateStatus <=", value, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusIn(List<Integer> values) {
+            addCriterion("updateStatus in", values, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusNotIn(List<Integer> values) {
+            addCriterion("updateStatus not in", values, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusBetween(Integer value1, Integer value2) {
+            addCriterion("updateStatus between", value1, value2, "updatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatestatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("updateStatus not between", value1, value2, "updatestatus");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
