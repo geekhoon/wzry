@@ -5,12 +5,14 @@ import com.bbs.dao.WordDao;
 import com.bbs.domain.Article;
 import com.bbs.domain.ArticleExample;
 import com.bbs.domain.Word;
+import com.bbs.domain.WordExample;
 import com.bbs.service.IArticleService;
 import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +112,9 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public Article getArticle(Integer articleid) {
         Article article = articleDao.selectByPrimaryKey(articleid);
-        List<Word> wordList = wordDao.selectByExample(null);
+        WordExample example=new WordExample();
+        example.createCriteria().andStatusEqualTo(0);
+        List<Word> wordList = wordDao.selectByExample(example);
         for (Word word : wordList) {
             String title = article.getTitle().replaceAll(word.getWord(), "***");
             String content = article.getContent().replaceAll(word.getWord(), "***");
@@ -148,6 +152,13 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public List<Article> searchArticle(String articleName,Integer zoneid) {
+        WordExample example=new WordExample();
+        example.createCriteria().andStatusEqualTo(0);
+        List<Word> wordList = wordDao.selectByExample(example);
+        for (Word word : wordList) {
+            if (word.getWord().contains(articleName))
+                return new ArrayList<>();
+        }
         ArticleExample articleExample = new ArticleExample();
         ArticleExample.Criteria criteria = articleExample.createCriteria();
         criteria.andTitleLike("%"+articleName+"%");
@@ -160,7 +171,9 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     private void replaceWord(List<Article> articleList) {
-        List<Word> wordList = wordDao.selectByExample(null);
+        WordExample example=new WordExample();
+        example.createCriteria().andStatusEqualTo(0);
+        List<Word> wordList = wordDao.selectByExample(example);
         for (Article article : articleList) {
             for (Word word : wordList) {
                 String title = article.getTitle().replaceAll(word.getWord(), "***");

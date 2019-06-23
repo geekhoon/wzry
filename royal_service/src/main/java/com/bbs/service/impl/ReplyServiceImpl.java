@@ -4,6 +4,7 @@ import com.bbs.dao.ReplyDao;
 import com.bbs.dao.WordDao;
 import com.bbs.domain.Reply;
 import com.bbs.domain.Word;
+import com.bbs.domain.WordExample;
 import com.bbs.service.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,9 @@ public class ReplyServiceImpl implements IReplyService {
     @Override
     public List<Reply> findReplyList(Integer commentid) {
         List<Reply> replyList = replyDao.findAll(commentid);
-        List<Word> wordList = wordDao.selectByExample(null);
+        WordExample example=new WordExample();
+        example.createCriteria().andStatusEqualTo(0);
+        List<Word> wordList = wordDao.selectByExample(example);
         for (Reply reply : replyList) {
             for (Word word : wordList) {
                 String replyContent = reply.getReplycontent().replaceAll(word.getWord(), "***");
