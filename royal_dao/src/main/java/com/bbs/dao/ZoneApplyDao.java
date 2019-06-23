@@ -3,6 +3,7 @@ package com.bbs.dao;
 import com.bbs.domain.ZoneApply;
 import com.bbs.domain.ZoneApplyExample;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -28,4 +29,7 @@ public interface ZoneApplyDao {
     int updateByPrimaryKeySelective(ZoneApply record);
 
     int updateByPrimaryKey(ZoneApply record);
+
+    @Update("update bbs_zoneapply_table set status=1 where applyZoneId=#{zid}")
+    void changeStatus(Integer zid);
 }

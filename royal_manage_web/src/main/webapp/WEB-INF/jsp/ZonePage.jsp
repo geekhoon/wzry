@@ -44,7 +44,7 @@
                         <li class="active">版块审核</li>
                     </ol>
                 </div>
-                <button class="btn btn-primary" onclick="showAddModal()">当前版块</button>
+                <button class="btn btn-primary" onclick="showZoneDetailModal()">当前版块</button>
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
@@ -64,16 +64,11 @@
                                     ${zone.zonename}
                                 </td>
                                 <td width="55%" >
-                                    ${zone.reson}
+                                    ${zone.reason}
                                 </td>
                                 <td width="20%">
-                                    <c:if test="${zone.status==0}">
-                                        <a href="/zone/changeStatus.do?wid=${zone.zoneid}&pn=${zoneMsgs.pageNum}" role="button" class="btn btn-danger" >停用</a>
-                                    </c:if>
-                                    <c:if test="${zone.status==1}">
-                                        <a href="/zone/changeStatus.do?wid=${zone.zoneid}&pn=${zoneMsgs.pageNum}" role="button" class="btn btn-primary" >启用</a>
-                                    </c:if>
-
+                                    <a href="/zoneApply/auditZone.do?zid=${zone.applyzoneid}&pn=${zoneMsgs.pageNum}&flag=1" role="button" class="btn btn-info" >通过</a>
+                                    <a href="/zoneApply/auditZone.do?zid=${zone.applyzoneid}&pn=${zoneMsgs.pageNum}&flag=0" role="button" class="btn btn-danger" >驳回</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -94,11 +89,11 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <!--首页-->
-                            <li><a href="#" onclick="searchWord(1)">首页</a></li>
+                            <li><a href="#" onclick="searchZone(1)">首页</a></li>
                             <!--上一页-->
                             <li>
                                 <c:if test="${zoneMsgs.hasPreviousPage}">
-                                        <a href="#" onclick="searchWord('${zoneMsgs.pageNum-1}')" aria-label="Previous">
+                                        <a href="#" onclick="searchZone('${zoneMsgs.pageNum-1}')" aria-label="Previous">
                                             <span aria-hidden="true">«</span>
                                         </a>
                                 </c:if>
@@ -109,20 +104,20 @@
                                     <li class="active"><a href="#">${page_num}</a></li>
                                 </c:if>
                                 <c:if test="${page_num != zoneMsgs.pageNum}">
-                                    <li><a href="#" onclick="searchWord('${page_num}')">${page_num}</a></li>
+                                    <li><a href="#" onclick="searchZone('${page_num}')">${page_num}</a></li>
                                 </c:if>
                             </c:forEach>
 
                             <!--下一页-->
                             <li>
                                 <c:if test="${zoneMsgs.hasNextPage}">
-                                    <a href="javascript:void(0)" onclick="searchWord('${zoneMsgs.pageNum+1}')"
+                                    <a href="javascript:void(0)" onclick="searchZone('${zoneMsgs.pageNum+1}')"
                                        aria-label="Next">
                                         <span aria-hidden="true">»</span>
                                     </a>
                                 </c:if>
                             </li>
-                            <li><a href="javascript:void(0)" onclick="searchWord('${zoneMsgs.pages}')">尾页</a></li>
+                            <li><a href="javascript:void(0)" onclick="searchZone('${zoneMsgs.pages}')">尾页</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -135,15 +130,15 @@
 </div><!-- /.hrms_dept_container -->
 
 <%--<%@ include file="ArticleAdd.jsp"%>--%>
-<%@ include file="WordUpdate.jsp"%>
+<%@ include file="ZoneDetail.jsp"%>
 </body>
 <script>
-    function searchWord(pn) {
-        location.href="/zone/findByPage.do?pn="+pn;
+    function searchZone(pn) {
+        location.href="/zoneApply/findByPage.do?pn="+pn;
     }
 
-    function showAddModal() {
-        $("#zone_add").modal();
+    function showZoneDetailModal() {
+        $("#zone_detail").modal();
     }
 
 </script>
