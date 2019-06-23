@@ -156,6 +156,8 @@ public class ArticleController {
             List<Reply> replyList = replyService.findReplyList(comment.getCommentid());
             map.put(comment.getCommentid(),replyList);
         }
+        List<User> userlist = userService.findPic();
+        request.getSession().setAttribute("userList",userlist);
 
         request.getSession().setAttribute("replyMap",map);
 

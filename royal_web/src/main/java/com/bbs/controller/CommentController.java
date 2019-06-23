@@ -46,8 +46,7 @@ public class CommentController {
            List<Comment> list = commentService.findCommentList(comment.getArticleid());
            request.getSession().setAttribute("commentList",list);
 
-           List<User> userlist = userService.findPic();
-           request.getSession().setAttribute("userList",userlist);
+
 
 
            response.sendRedirect(request.getContextPath()+"/article/getArticle.do?articleid="+comment.getArticleid());
