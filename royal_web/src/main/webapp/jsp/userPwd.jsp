@@ -38,10 +38,9 @@
                             dataType:"text",
                             success:function (data) {
                                 if(data=="error"){
-                                    //输入的旧密码错误
-                                    $("#changePassword").html("<font color='red'>输入的密码错误</font>");
+                                    $("#changePassword").html("<font color='red'>输入的旧密码错误</font>");
                                 }else if(data == "success"){
-                                    alert("请重新登录");
+                                    alert("修改成功,请重新登录");
                                     location.href="${pageContext.request.contextPath}/user/userExist.do";
                                 }
                             }
@@ -56,7 +55,6 @@
                 var oldPass_Reg = /^[a-zA-Z0-9]{6,10}$/;
                 var boolean = oldPass_Reg.test(oldPass);
                 if("" == oldPass){
-                    //alert("密码不能为空!");
                     $("#oldPassword").css("border","1px solid red");
                     return false;
                 }else{
@@ -64,7 +62,6 @@
                         $("#oldPassword").css("border","1px solid green");
                         return true;
                     }else{
-                        //alert("密码格式错误");
                         $("#oldPassword").css("border","1px solid red");
                         return false;
                     }
@@ -76,7 +73,6 @@
                 var newPass_Reg = /^[a-zA-Z0-9]{6,10}$/;
                 var boolean = newPass_Reg.test(newPass);
                 if("" == newPass){
-                    //alert("密码不能为空!");
                     $("#newPassword").css("border","1px solid red");
                     return false;
                 }else{
@@ -84,7 +80,6 @@
                         $("#newPassword").css("border","1px solid green");
                         return true;
                     }else{
-                        //alert("密码格式错误");
                         $("#newPassword").css("border","1px solid red");
                         $("#changePassword").html("<font color='red'>密码必须是6~10位的英文或数字</font>");
                         return false;

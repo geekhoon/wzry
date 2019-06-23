@@ -105,8 +105,8 @@ public class UserController {
     @RequestMapping("/userChangePass.do")
     @ResponseBody
     public String userChangePass(String userid,String oldPass,String newPass){
-        User checkUserPass = userService.checkUserPass(userid,oldPass);
-        if(checkUserPass == null){
+        Boolean checkUserPass = userService.checkUserPass(userid,oldPass);
+        if(!checkUserPass){
             //输入的旧密码错误
             return "error";
         }else{

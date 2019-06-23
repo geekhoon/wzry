@@ -50,33 +50,8 @@ public interface UserDao {
 
     User login(User user);
 
-    @Select("select * from bbs_user_table where userName = #{username}")
-    @Results({
-            @Result(id=true,property = "id",column="id"),
-            @Result(property = "username",column="userName"),
-            @Result(property = "userpass",column="userPass"),
-            @Result(property = "email",column="email"),
-            @Result(property = "picurl",column="picUrl"),
-            @Result(property = "role",column="role"),
-            @Result(property = "lastlogintime",column="lastLoginTime"),
-            @Result(property = "loginstatus",column="loginStatus"),
-            @Result(property = "talkstatus",column="talkStatus")
-    })
     User findUserByName(String userName);
 
-    @Insert("insert into bbs_user_table(userName,userPass,email,lastlogintime,talkstatus) " +
-            "values(#{username},#{userpass},#{email},#{lastlogintime},#{talkstatus})")
-    @Results({
-            @Result(id=true,property = "id",column="id"),
-            @Result(property = "username",column="userName"),
-            @Result(property = "userpass",column="userPass"),
-            @Result(property = "email",column="email"),
-            @Result(property = "picurl",column="picUrl"),
-            @Result(property = "role",column="role"),
-            @Result(property = "lastlogintime",column="lastLoginTime"),
-            @Result(property = "loginstatus",column="loginStatus"),
-            @Result(property = "talkstatus",column="talkStatus")
-    })
     int userRegist(User user);
 
     User findPicByName(User user);

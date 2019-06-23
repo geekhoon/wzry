@@ -336,4 +336,24 @@
   <select id="findPicByName" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
     select * from bbs_user_table where userName = #{username}
   </select>
+
+    <select id="checkUserPass" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+        select * from bbs_user_table where userId=#{userid} and userPass = #{userpass}
+    </select>
+
+    <select id="findUserByName" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+        select * from bbs_user_table where userName = #{username}
+    </select>
+
+    <insert id="userRegist" parameterType="com.bbs.domain.User">
+        <selectKey resultType="java.lang.Integer" keyProperty="userid" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into bbs_user_table(userId,userName,userPass,email,lastlogintime,talkstatus)
+        values(#{userid},#{username},#{userpass},#{email},#{lastlogintime},#{talkstatus})
+    </insert>
+
+  <update id="changeUserPass" parameterType="com.bbs.domain.User" >
+    update bbs_user_table set userPass = #{userpass} where userId = #{userid}
+  </update>
 </mapper>

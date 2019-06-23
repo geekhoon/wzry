@@ -81,11 +81,10 @@
                 $("#checkUserName").text("");
                 $("#checkUserName").attr("style","display:none");
                 var userName_reg = $("#userName_reg").val();
-                var userName_Reg =/(?![a-z]+$|[0-9]+$|_+$)^[a-zA-Z0-9_]{6,}$/;
+                var userName_Reg =/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
                 var boolean = userName_Reg.test(userName_reg);
                 $("#userName_reg").css({border:"none"});
                 if(userName_reg == ""){
-                    //alert("用户名不能为空!");
                     $("#userName_reg").css("border","1px solid red");
                     return false;
                 }else{
@@ -93,7 +92,6 @@
                         $("#userName_reg").css("border","1px solid green");
                         return true;
                     }else{
-                        //alert("用户名格式错误,请重新输入");
                         $("#userName_reg").css("border","1px solid red");
                         return false;
                     }

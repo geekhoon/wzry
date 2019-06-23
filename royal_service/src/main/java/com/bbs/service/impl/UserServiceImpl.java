@@ -104,17 +104,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User checkUserPass(String userid, String oldPass) {
+    public Boolean checkUserPass(String userid, String oldPass) {
         User u = new User();
         u.setUserid(Integer.parseInt(userid));
         u.setUserpass(oldPass);
-        User user = userDao.checkUserPass(u);
-        if (user != null){
+        User check = userDao.checkUserPass(u);
+        if (check != null){
             //旧密码正确,查到用户
-            return user;
+            return true;
         }else{
             //旧密码错误,查不到用户
-            return user;
+            return false;
         }
     }
 
