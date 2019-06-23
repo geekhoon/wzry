@@ -42,7 +42,13 @@ public class UpvoteController {
     public String findByUsernameAndArticleid(@Param(value = "articleid") Integer articleid, HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("user");
         Upvote upvote = new Upvote();
-        upvote.setUpvoteusername(user.getUsername());
+        if(user != null){
+            upvote.setUpvoteusername(user.getUsername());
+        }else {
+            return "false";
+        }
+
+
         upvote.setUpvotearticleid(articleid);
         List<Upvote> list = upvoteService.findByUsernameAndArticleid(upvote);
         if (list.size() == 0 || list.get(0).getIsupvote() == 0){
