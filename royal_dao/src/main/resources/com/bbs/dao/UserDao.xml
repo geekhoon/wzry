@@ -322,4 +322,15 @@
   <select id="findUserPicture" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
     select * from bbs_user_table where userId = #{userid}
   </select>
+
+  <update id="updateLoginTime" parameterType="com.bbs.domain.User" >
+  update bbs_user_table set lastLoginTime = #{lastlogintime} where username = #{username}
+</update>
+
+  <select id="login" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+  Select * from bbs_user_table where userName = #{username} and userPass= #{userpass}
+</select>
+  <update id="updateLoginStatus" parameterType="map">
+  update bbs_user_table set loginStatus = #{loginstatus} where userId = #{userid}
+</update>
 </mapper>

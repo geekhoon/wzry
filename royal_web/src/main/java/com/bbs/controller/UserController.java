@@ -1,5 +1,7 @@
 package com.bbs.controller;
 
+import com.bbs.common.CommonCode;
+import com.bbs.common.ResponseResult;
 import com.bbs.domain.User;
 import com.bbs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -50,6 +52,11 @@ public class UserController {
     @RequestMapping("/findUserPwd.do")
     public String findUserPwd(){
         return "userPwd";
+    }
+
+    @RequestMapping("/findUserApply.do")
+    public String findUserApply(){
+        return "userApply";
     }
 
     @RequestMapping("/findUserByUserName.do")
@@ -196,5 +203,19 @@ public class UserController {
         List<User> list =  userService.getOnlineUser();
 
         return list.size();
+    }
+
+    @RequestMapping("/apply")
+    @ResponseBody
+    public ResponseResult apply(HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("user");
+        try {
+            userService.apply(user);
+
+            return new ResponseResult(CommonCode.SUCCESS);
+        }catch (Exception e){
+            return new ResponseResult(CommonCode.FAIL);
+        }
+
     }
 }

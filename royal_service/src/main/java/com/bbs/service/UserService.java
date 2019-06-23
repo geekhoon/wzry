@@ -59,6 +59,8 @@ public interface UserService {
 
     String findUserPicture(String userid);
 
+    void apply(User user);
+
     void changeApplyStatus(Integer id);
 
     void changeApplyStatusAndIsupate(Integer id);

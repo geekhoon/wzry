@@ -14,7 +14,7 @@
             <div class="box">
                 <c:if test="${not empty user.username && !(user.username eq null) }">
 
-                欢迎,<a href='${pageContext.request.contextPath}/user/findUserInfo.do'>${user.username}</a>
+                欢迎${user.username}&nbsp;<a href='${pageContext.request.contextPath}/user/findUserInfo.do'>个人信息</a>
                     <a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist'>注销</a>
                 </c:if>
                 <c:if test="${empty user.username || (user.username eq null) }">

@@ -170,6 +170,15 @@ public class ArticleServiceImpl implements IArticleService {
         return articleList;
     }
 
+    @Override
+    public Integer getCount(String username) {
+        ArticleExample example = new ArticleExample();
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andSendernameEqualTo(username);
+        criteria.andIsreportEqualTo(0);
+        return articleDao.selectByExample(example).size();
+    }
+
     private void replaceWord(List<Article> articleList) {
         WordExample example=new WordExample();
         example.createCriteria().andStatusEqualTo(0);

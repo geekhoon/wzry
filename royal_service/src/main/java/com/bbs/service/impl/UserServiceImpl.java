@@ -162,6 +162,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void apply(User user) {
+        user.setIsupdating(1);
+        userDao.updateByPrimaryKey(user);
+    }
+
+    @Override
     public void changeApplyStatus(Integer id) {
         User user = userDao.selectByPrimaryKey(id);
         user.setUpdatestatus(1);

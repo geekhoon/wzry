@@ -38,4 +38,6 @@ public interface IArticleService {
     void deleteArticle(Integer id);
 
     List<Article> searchArticle(String articleName,Integer zoneid);
+
+    Integer getCount(String username);
 }

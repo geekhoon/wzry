@@ -114,15 +114,11 @@
                 <a href="javascript:;"><img src="${pageContext.request.contextPath}/images/logo.png" alt=""/></a>
             </h1>
             <div class="search-box l">
-                <form action="javascript:;">
-                    <input type="text" class="txt l" placeholder="请输入关键字">
-                    <input type="button" value="搜索" class="btn l"/>
-                </form>
             </div>
         </div>
         <div class="hm-header-b">
             <i class="hm-ico-home"></i>
-            <a href="index.do">首页</a><span>></span>修改密码
+            <a href="/index.jsp">首页</a><span>></span>修改密码
         </div>
     </div>
 </div>
@@ -149,6 +145,7 @@
                 <ul class="clearfix hd">
                     <li><a href="${pageContext.request.contextPath}/user/findUserInfo.do">个人信息</a></li>
                     <li class="cur"><a href="${pageContext.request.contextPath}/user/findUserPwd.do">修改密码</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user/findUserApply.do">申请高级用户</a></li>
                 </ul>
                 <form action="#" method="post">
                   <ul class="bd">

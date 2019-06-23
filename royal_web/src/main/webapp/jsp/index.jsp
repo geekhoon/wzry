@@ -133,7 +133,7 @@
                     <ul class="b clearfix">
                         <c:forEach items="${onLineUser}" var="user">
                         <li>
-                            <div><img src="${user.picurl}" height="55"/> </div>
+                            <div><img src="${pageContext.request.contextPath}/${user.picurl}" height="55"/> </div>
                             <p>${user.username}</p>
                         </li>
                         </c:forEach>

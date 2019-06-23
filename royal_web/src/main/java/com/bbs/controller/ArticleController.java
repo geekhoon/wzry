@@ -162,4 +162,13 @@ public class ArticleController {
         return "getArticle";
     }
 
+    @RequestMapping("/getCount")
+    @ResponseBody
+    public Integer getCount(HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("user");
+
+        Integer count = articleService.getCount(user.getUsername());
+        return count;
+    }
+
 }
