@@ -78,4 +78,6 @@ public interface UserDao {
             @Result(property = "talkstatus",column="talkStatus")
     })
     int userRegist(User user);
+
+    User findPicByName(User user);
 }

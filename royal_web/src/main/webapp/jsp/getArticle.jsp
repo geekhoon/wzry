@@ -71,7 +71,7 @@
                 <!--原帖楼-->
                 <li class="floor clearfix">
                     <div class="floorer-info l">
-                        <div class="floorer-photo"><img src="../images/default.png"/></div>
+                        <div class="floorer-photo"><img id="articlePic" src=""/></div>
                         <div class="floorer-name">${article.sendername}</div>
                     </div>
                     <div class="floor-con l">
@@ -473,6 +473,22 @@ function showDialog1() {
             });
         });
     });
+</script>
+
+<script>
+
+    $(function () {
+        $.ajax({
+            type:"POST",
+            url:"${pageContext.request.contextPath}/user/findPicByName.do",
+            data:{"username":"${article.sendername}"},
+            dataType:"text",
+            success:function (data) {
+                $("#articlePic").attr("src","${pageContext.request.contextPath}/"+data);
+            }
+        });
+    });
+
 </script>
 
 </html>

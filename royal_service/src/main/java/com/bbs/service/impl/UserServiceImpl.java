@@ -183,6 +183,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String findPicByName(String username) {
+        User user = new User();
+        user.setUsername(username);
+        User u = userDao.findPicByName(user);
+        return u.getPicurl();
+    }
+
+    @Override
     public void updateLoginStatus(Integer userid, Integer loginstatus) {
         Map map = new HashMap<>();
         map.put("userid",userid);

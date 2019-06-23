@@ -77,13 +77,13 @@ public class UserController {
         user.setUsername(username);
         user.setUserpass(userpass);
         User u = userService.login(user);
-        userService.updateLoginStatus(u.getUserid(), 1);
         if(u == null){
             //登录失败
             return "false";
         }else{
             //登录成功
             //request.getSession().setAttribute("username",u.getUsername());
+            userService.updateLoginStatus(u.getUserid(), 1);
             request.getSession().setAttribute("user",u);
             System.out.println(u);
             return "true";
@@ -93,7 +93,9 @@ public class UserController {
     @RequestMapping("/userExist.do")
     public void userExist(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = (User)request.getSession().getAttribute("user");
-        userService.updateLoginStatus(user.getUserid(),0);
+        if(user != null){
+            userService.updateLoginStatus(user.getUserid(),0);
+        }
         request.getSession().removeAttribute("user");
 
        // request.getSession().removeAttribute("username");
@@ -156,6 +158,17 @@ public class UserController {
     public String findUserPicture(String userid){
         String path = userService.findUserPicture(userid);
         return path;
+    }
+
+    @RequestMapping("findPicByName.do")
+    @ResponseBody
+    public String findPicByName(String username,HttpServletRequest request){
+        if(username != null){
+            String picByName = userService.findPicByName(username);
+            String path = request.getSession().getServletContext().getContextPath()+picByName;
+            return path;
+        }
+        return request.getSession().getServletContext().getContextPath()+"images/default.png";
     }
 
     @RequestMapping("/checkUserEmail.do")

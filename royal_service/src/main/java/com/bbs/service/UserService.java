@@ -64,4 +64,6 @@ public interface UserService {
     void changeApplyStatus(Integer id);
 
     void changeApplyStatusAndIsupate(Integer id);
+
+    String findPicByName(String username);
 }

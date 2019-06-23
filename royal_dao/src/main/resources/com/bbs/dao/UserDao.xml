@@ -333,4 +333,7 @@
   <update id="updateLoginStatus" parameterType="map">
   update bbs_user_table set loginStatus = #{loginstatus} where userId = #{userid}
 </update>
+  <select id="findPicByName" parameterType="com.bbs.domain.User" resultType="com.bbs.domain.User">
+    select * from bbs_user_table where userName = #{username}
+  </select>
 </mapper>
