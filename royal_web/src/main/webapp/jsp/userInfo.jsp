@@ -138,7 +138,12 @@
                 <ul class="clearfix hd">
                     <li class="cur"><a href="${pageContext.request.contextPath}/user/findUserInfo.do">个人信息</a></li>
                     <li><a href="${pageContext.request.contextPath}/user/findUserPwd.do">修改密码</a></li>
-                    <li><a href="${pageContext.request.contextPath}/user/findUserApply.do">申请高级用户</a></li>
+                    <c:if test="${user.role == 1}">
+                        <li><a href="${pageContext.request.contextPath}/user/findUserApply.do">申请高级用户</a></li>
+                    </c:if>
+                    <c:if test="${user.role == 2}">
+                        <li><a href="${pageContext.request.contextPath}/user/findZoneApply.do">开辟新版块</a></li>
+                    </c:if>
                 </ul>
 
 

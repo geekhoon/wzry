@@ -59,6 +59,11 @@ public class UserController {
         return "userApply";
     }
 
+    @RequestMapping("/findZoneApply.do")
+    public String findZoneApply(){
+        return "zoneApply";
+    }
+
     @RequestMapping("/findUserByUserName.do")
     public @ResponseBody User findUserByUserName(String userName){
         User user = userService.findUserByuserName(userName);

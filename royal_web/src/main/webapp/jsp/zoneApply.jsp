@@ -88,57 +88,68 @@
                     <li><a href="${pageContext.request.contextPath}/user/findUserInfo.do">个人信息</a></li>
                     <li><a href="${pageContext.request.contextPath}/user/findUserPwd.do">修改密码</a></li>
                     <c:if test="${user.role == 1}">
-                    <li class="cur"><a href="${pageContext.request.contextPath}/user/findUserApply.do">申请高级用户</a></li>
+                        <li class="cur"><a href="${pageContext.request.contextPath}/user/findUserApply.do">申请高级用户</a></li>
                     </c:if>
                     <c:if test="${user.role == 2}">
                         <li class="cur"><a href="${pageContext.request.contextPath}/user/findZoneApply.do">开辟新版块</a></li>
                     </c:if>
                 </ul>
-                <form action="#" method="post">
-                  <ul class="bd">
-                    <li class="clearfix">
-                        <div class="info-l" style="padding-left: 60px"><i class="red" style="font-size: 16px">高级特权:</i></div>
-                        <div class="info-r"style="padding-top: 5px"><i class="black" style="font-size: 16px">开辟新版块</i></div>
-                    </li>
-                    <li class="clearfix">
-                        <div class="info-l" style="padding-left: 60px"><i class="red" style="font-size: 16px">申请条件:</i></div>
-                        <div class="info-r"style="padding-top: 5px"><i class="black" style="font-size: 16px">发帖数 ≥ 5</i></div>
-                    </li>
-                      <li class="clearfix">
-                          <div class="info-l" style="padding-left: 60px"><i class="red" style="font-size: 16px">当前发帖数:</i></div>
-                          <div class="info-r" style="padding-top: 5px"><span id="articleCount" ></span></div>
-                      </li>
-                    <li class="clearfix">
-                        <div class="info-l"></div>
-                        <div class="info-r">
-						  <input type="button" class="btn" value="申请" onclick="apply()"/>
-                            <script type="text/javascript">
-                                function apply() {
-                                    var count =  $("#articleCount").html();
-                                    if (count < 5){
-                                        alert("发帖数小于5，不满足条件！")
-                                        return;
-                                    }else {
+                <form action="#" method="post" id="zoneApply_form">
+                    <ul class="bd">
+                        <li class="clearfix">
+                            <input type="hidden" id="userId" name="userid" value="${sessionScope.user.userid}"/>
+                            <div class="info-l"><i></i>版块名称:</div>
+                            <div class="info-r"><input type="text" class="txt" name="zonename" /></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="info-l">申请理由:</div>
+                            <div class="info-r"><textarea  name="reason" required="required" placeholder="请在此输入申请理由" style="width:200px; height:100px; border:solid 1px #ddd; resize:none;"></textarea></div>
+                        </li>
+
+                        <li class="clearfix">
+                            <div class="info-l"></div>
+                            <div class="info-r">
+                                <input type="button" class="btn" value="申请" onclick="zoneApply()"/>
+                                <script type="text/javascript">
+                                    function zoneApply() {
+                                        $.fn.serializeJson=function(){
+                                            var serializeObj={};
+                                            var array=this.serializeArray();
+                                            var str=this.serialize();
+                                            $(array).each(function(){
+                                                if(serializeObj[this.name]){
+                                                    if($.isArray(serializeObj[this.name])){
+                                                        serializeObj[this.name].push(this.value);
+                                                    }else{
+                                                        serializeObj[this.name]=[serializeObj[this.name],this.value];
+                                                    }
+                                                }else{
+                                                    serializeObj[this.name]=this.value;
+                                                }
+                                            });
+                                            return serializeObj;
+                                        };
                                         $.ajax({
-                                            type:'get',
+                                            type:'post',
                                             dataType:'json',
                                             contentType:'application/json',
-                                            url:'/user/apply.do',
-                                            data:{},
-                                            success:function (result) {
-                                               if (result.success){
-                                                   alert("申请成功，待审核！");
-                                               }else{
-                                                   alert("申请失败！");
-                                               }
+                                            url:'/zoneApply/add.do',
+                                            data:JSON.stringify($("#zoneApply_form").serializeJson()),
+                                            success:function (data) {
+                                                if (data.success){
+                                                    alert("申请成功，待审核！");
+                                                    $("#zoneApply_form")[0].reset();
+                                                }else{
+                                                    alert("申请失败！");
+                                                }
                                             }
                                         });
+
                                     }
-                                }
-                            </script>
-						</div>
-                    </li>
-                  </ul>
+                                </script>
+                            </div>
+                        </li>
+                    </ul>
                 </form>
             </div>
         </div>

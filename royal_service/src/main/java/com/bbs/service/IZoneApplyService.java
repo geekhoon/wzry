@@ -9,4 +9,6 @@ public interface IZoneApplyService {
     List<ZoneApply> findByPage();
 
     void changeStatus(Integer zid);
+
+    void add(ZoneApply zoneApply);
 }

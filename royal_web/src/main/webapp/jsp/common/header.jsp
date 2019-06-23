@@ -14,7 +14,19 @@
             <div class="box">
                 <c:if test="${not empty user.username && !(user.username eq null) }">
 
-                欢迎${user.username}&nbsp;<a href='${pageContext.request.contextPath}/user/findUserInfo.do'>个人信息</a>
+                欢迎<c:if test="${user.role == 1}">
+                    普通用户:
+                </c:if>
+                    <c:if test="${user.role == 2}">
+                        高级用户:
+                    </c:if>
+                    <c:if test="${user.role == 3}">
+                        超级管理员:
+                    </c:if>
+                    ${user.username}&nbsp;
+
+                    
+                    <a href='${pageContext.request.contextPath}/user/findUserInfo.do'>个人中心</a>
                     <a href='${pageContext.request.contextPath}/user/userExist.do' id='userExist'>注销</a>
                 </c:if>
                 <c:if test="${empty user.username || (user.username eq null) }">
