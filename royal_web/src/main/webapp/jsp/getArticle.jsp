@@ -111,7 +111,13 @@
                 <!-- 评论部分,一楼及以后 -->
                 <li class="floor clearfix">
                     <div class="floorer-info l">
-                        <div class="floorer-photo"><img src="../images/default.png"/></div>
+                        <div class="floorer-photo">
+                            <c:forEach items="${userList}" var="user">
+                            <c:if test="${comment.commentusername == user.username}">
+                            <img src="${pageContext.request.contextPath}/${user.picurl}" id="commentPic"/>
+                            </c:if>
+                            </c:forEach>
+                        </div>
                         <div class="floorer-name">${comment.commentusername}</div>
                     </div>
                     <div class="floor-con l">
@@ -131,7 +137,13 @@
 
                                     <!-- 回复部分,楼中楼 -->
                                     <li class="clearfix">
-                                        <div class="floor-ans-pho l"><img src="../images/default.png"/></div>
+                                        <div class="floor-ans-pho l">
+                                          <c:forEach items="${userList}" var="user">
+                                                <c:if test="${rep.replyusername == user.username}">
+                                                    <img src="${pageContext.request.contextPath}/${user.picurl}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
                                         <div class="floor-ans-con l">
                                             <span class="name">${rep.replyusername}</span>：${rep.replycontent}
                                             <span class="ans-time">${rep.replytimestr}</span>

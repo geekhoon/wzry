@@ -3,6 +3,7 @@ package com.bbs.controller;
 import com.bbs.domain.Comment;
 import com.bbs.domain.User;
 import com.bbs.service.ICommentService;
+import com.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,9 @@ public class CommentController {
     @Autowired
     private ICommentService commentService;
 
+    @Autowired
+    private UserService userService;
+
 
     /**
      * 发表评论
@@ -41,6 +45,11 @@ public class CommentController {
            commentService.addComment(comment);
            List<Comment> list = commentService.findCommentList(comment.getArticleid());
            request.getSession().setAttribute("commentList",list);
+
+           List<User> userlist = userService.findPic();
+           request.getSession().setAttribute("userList",userlist);
+
+
            response.sendRedirect(request.getContextPath()+"/article/getArticle.do?articleid="+comment.getArticleid());
        }catch (Exception e){
        }

@@ -66,4 +66,6 @@ public interface UserService {
     void changeApplyStatusAndIsupate(Integer id);
 
     String findPicByName(String username);
+
+    List<User> findPic();
 }

@@ -191,6 +191,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findPic() {
+        return userDao.selectByExample(null);
+    }
+
+    @Override
     public void updateLoginStatus(Integer userid, Integer loginstatus) {
         Map map = new HashMap<>();
         map.put("userid",userid);
