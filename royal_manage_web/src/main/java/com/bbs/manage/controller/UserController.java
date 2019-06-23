@@ -82,8 +82,26 @@ public class UserController {
         } else {
             return "redirect:/user/findByPage.do?username=" + username + "&pn=" + pageNum + "&role=";
         }
-//        return "forward:/user/findByPage.do?pn="+pageNum+"&username="+user.getUsername()+"&role="+user.getRole();
 
     }
 
+    @GetMapping("/changeApplyStatus.do")
+    public String changeApplyStatus(@RequestParam("id") Integer id, @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pageNum, User user,Integer flag) {
+        if (flag==0){
+            //升级
+            userService.changeApplyStatus(id);
+        }else if (flag==1){
+            //驳回
+            userService.changeApplyStatusAndIsupate(id);
+        }
+        String username = "";
+        if (user.getUsername() != null) {
+            username = user.getUsername();
+        }
+        if (user.getRole() != null) {
+            return "redirect:/user/findByPage.do?username=" + username + "&pn=" + pageNum + "&role=" + user.getRole();
+        } else {
+            return "redirect:/user/findByPage.do?username=" + username + "&pn=" + pageNum + "&role=";
+        }
+    }
 }

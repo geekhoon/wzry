@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             criteria.andUsernameLike("%"+user.getUsername().trim()+"%");
         if (user.getRole()!=null)
             criteria.andRoleEqualTo(user.getRole());
-        userExample.setOrderByClause("role desc");
+        userExample.setOrderByClause("role desc ,isupdating desc");
         List<User> userList = userDao.selectByExample(userExample);
         return userList;
     }
@@ -159,6 +159,21 @@ public class UserServiceImpl implements UserService {
             return "images/default.png";
         }
         return u.getPicurl();
+    }
+
+    @Override
+    public void changeApplyStatus(Integer id) {
+        User user = userDao.selectByPrimaryKey(id);
+        user.setUpdatestatus(1);
+        user.setRole(2);
+        userDao.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public void changeApplyStatusAndIsupate(Integer id) {
+        User user = userDao.selectByPrimaryKey(id);
+        user.setIsupdating(0);
+        userDao.updateByPrimaryKey(user);
     }
 
     @Override

@@ -107,7 +107,7 @@
                                         超级管理员
                                     </c:if>
                                 </td>
-                                <td width="25%" class="line-limit-length">${user.email}</td>
+                                <td width="10%" class="line-limit-length">${user.email}</td>
                                 <td width="10%" class="line-limit-length">
                                     <c:if test="${user.talkstatus==0}">
                                         否
@@ -119,13 +119,19 @@
                                 <td width="25%">
                                     ${user.lastlogintime}
                                 </td>
-                                <td width="12%">
-                                    <a href="#" role="button" class="btn btn-primary" data-toggle="modal" value="${user.userid}" data-target=".user-update-modal">审核</a>
+                                <td width="27%">
+                                    <c:if test="${user.updatestatus==1||user.isupdating==0}">
+                                        <a href="#" role="button" class="btn btn-primary" disabled >升级</a>
+                                    </c:if>
+                                    <c:if test="${user.updatestatus==0&&user.isupdating==1}">
+                                        <a href="/user/changeApplyStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}&flag=0" role="button" class="btn btn-primary" >升级</a>
+                                        <a href="/user/changeApplyStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}&flag=1" role="button" class="btn btn-primary" >驳回</a>
+                                    </c:if>
                                     <c:if test="${user.talkstatus==0}">
-                                        <a href="/user/changeStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}" role="button" class="btn btn-danger" >禁言</a>
+                                        <a href="/user/changeStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}" role="button" class="btn btn-danger" style="right: 0px">禁言</a>
                                     </c:if>
                                     <c:if test="${user.talkstatus==1}">
-                                        <a href="/user/changeStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}" role="button" class="btn btn-info" >恢复</a>
+                                        <a href="/user/changeStatus.do?id=${user.userid}&pn=${userMsgs.pageNum}&username=${userSearch.username}&role=${userSearch.role}" role="button" class="btn btn-info" style="right: 0px">恢复</a>
                                     </c:if>
                                 </td>
                             </tr>
