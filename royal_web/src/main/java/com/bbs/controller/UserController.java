@@ -206,6 +206,7 @@ public class UserController {
         User userLogin = userService.findUserByuserName(user.getUsername());
 
         if (regist){
+            userService.updateLoginStatus(userLogin.getUserid(), 1);
             //注册成功
             request.getSession().setAttribute("user",userLogin);
             return user;
