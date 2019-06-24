@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
     public Boolean userRegist(User user) {
         Date registDate = new Date();
         user.setLastlogintime(registDate);
-        user.setTalkstatus(1);
         int num = userDao.userRegist(user);
         if (num > 0){
             return true;
