@@ -201,7 +201,7 @@ public class UserController {
         user.setUsername(username);
         user.setUserpass(userpass);
         user.setEmail(email);
-
+        user.setTalkstatus(0);
         Boolean regist = userService.userRegist(user);
         User userLogin = userService.findUserByuserName(user.getUsername());
 

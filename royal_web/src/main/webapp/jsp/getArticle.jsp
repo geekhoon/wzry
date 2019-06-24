@@ -89,7 +89,12 @@
 
 
                              <c:if test="${not empty user.username && !(user.username eq null) }">
-                                 <a href="#comment" > <i></i> 评论</a>
+                                 <c:if test="${user.talkstatus == 0 }">
+                                     <a href="#comment" > <i></i> 评论</a>
+                                 </c:if>
+                                 <c:if test="${user.talkstatus == 1 }">
+                                     <a href="javascript:alert('您已被禁言！')" > <i></i> 评论</a>
+                                 </c:if>
                                  <a href="javascript:;" onclick="upvote(${article.articleid})"> <i id="id1"></i> 点赞</a>
                                  <a href="javascript:;" onclick="showDialog1()"> <i id="id2"></i> 举报</a>
                              </c:if>
@@ -158,7 +163,14 @@
                             </div>
                             <span class="icon-feedback">
                                     <c:if test="${not empty user.username && !(user.username eq null) }">
-                                         <a href="javascript:;" onclick="showDialog(1);getCommentId(${comment.commentid})"> <i id="id3"></i> 回复</a>
+
+                                        <c:if test="${user.talkstatus == 0 }">
+                                            <a href="javascript:;" onclick="showDialog(1);getCommentId(${comment.commentid})"> <i id="id3"></i> 回复</a>
+                                        </c:if>
+                                        <c:if test="${user.talkstatus == 1 }">
+                                            <a href="javascript:alert('您已被禁言！')"> <i id="id3"></i> 回复</a>
+                                        </c:if>
+
                                     </c:if>
                                  <c:if test="${empty user.username || (user.username eq null) }">
                                      <a href="javascript:alert('请先登录！');" > <i id="id3"></i> 回复</a>
@@ -260,7 +272,16 @@
                     </div>
                     <div class="con-b">
                         <%--<input type="button" class="btn" id="btn_commentSub" value="提交"/> --%>
-                        <input type="submit" class="btn" onclick="reply(${article.articleid})"/>
+
+                            <c:if test="${user.talkstatus == 0 }">
+                                <input type="submit" class="btn" onclick="reply(${article.articleid})"/>
+                            </c:if>
+                            <c:if test="${user.talkstatus == 1 }">
+                                <input value="发表评论" class="btn" onclick="javascript:alert('您已被禁言！')"/>
+                            </c:if>
+
+
+
                         <span class="num">不能超过5000字</span>
                     </div>
                 </div>
