@@ -128,6 +128,7 @@
                                             success:function (result) {
                                                if (result.success){
                                                    alert("申请成功，待审核！");
+                                                   location.href="http://localhost:8081/user/findUserInfo.do";
                                                }else{
                                                    alert("申请失败！");
                                                }

@@ -45,7 +45,10 @@ public class UserController {
     }
 
     @RequestMapping("/findUserInfo.do")
-    public String findUserInfo(){
+    public String findUserInfo(HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("user");
+        User user1 = userService.findById(user.getUserid());
+        request.getSession().setAttribute("user",user1);
         return "userInfo";
     }
 
@@ -230,7 +233,6 @@ public class UserController {
         User user = (User)request.getSession().getAttribute("user");
         try {
             userService.apply(user);
-
             return new ResponseResult(CommonCode.SUCCESS);
         }catch (Exception e){
             return new ResponseResult(CommonCode.FAIL);
