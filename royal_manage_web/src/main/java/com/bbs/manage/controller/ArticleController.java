@@ -29,6 +29,7 @@ public class ArticleController {
      * @param pageNum
      * @param article
      * @return
+     *
      */
     @GetMapping("/findByPage.do")
     public String findByPage(Model model, @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pageNum, Article article) {
